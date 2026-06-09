@@ -1,0 +1,83 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 4rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.scrolled {
+  background: var(--cream);
+  box-shadow: 0 2px 20px rgba(30, 26, 20, 0.08);
+}
+
+.logo {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  width: 44px;
+  height: 44px;
+  background: var(--orange);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.logo:hover {
+  background: var(--orange-light);
+}
+
+.links {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.links a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dark);
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--orange);
+  transition: width 0.25s ease;
+}
+
+.links a:hover {
+  color: var(--orange);
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .links {
+    gap: 1.5rem;
+  }
+}
