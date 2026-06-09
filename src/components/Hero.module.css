@@ -9,9 +9,51 @@
   background: var(--cream);
 }
 
+/* ── Nature scene — full-width backdrop ── */
+
+.natureScene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.natureLayer {
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+.floatSun {
+  animation: floatBob 4s ease-in-out infinite;
+}
+
+/* Gradient fades the left half so text stays legible */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(245, 239, 224, 0.88) 0%,
+    rgba(245, 239, 224, 0.65) 38%,
+    rgba(245, 239, 224, 0.15) 62%,
+    transparent 80%
+  );
+}
+
+/* ── Text content ── */
+
 .content {
   padding-top: 6rem;
-  z-index: 2;
+  padding-bottom: 8rem;
+  position: relative;
+  z-index: 3;
 }
 
 .greeting {
@@ -24,22 +66,41 @@
   margin-bottom: 0.75rem;
 }
 
+/* ── Color block reveal ── */
+
+.nameWrapper {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.35em;
+}
+
+.revealBlock {
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  z-index: 1;
+}
+
 .name {
   font-size: clamp(3.5rem, 7vw, 6rem);
   font-weight: 900;
   color: var(--dark);
   letter-spacing: -0.02em;
-  line-height: 1;
-  margin-bottom: 1.25rem;
+  line-height: 1.15;
 }
 
+/* ── Scramble tagline ── */
+
 .tagline {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--warm-brown);
   font-weight: 400;
   margin-bottom: 2.5rem;
   max-width: 400px;
   line-height: 1.65;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.02em;
 }
 
 .ctas {
@@ -86,53 +147,18 @@
   transform: translateY(-2px);
 }
 
-/* ── Decorative visual ── */
+/* ── Visual / avatar panel ── */
 
 .visual {
   position: relative;
+  z-index: 3;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.circleOrange {
-  position: absolute;
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  background: var(--orange);
-  opacity: 0.14;
-  top: 50%;
-  left: 50%;
-  transform: translate(-10%, -50%);
-}
-
-.circleGreen {
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  background: var(--green);
-  opacity: 0.18;
-  top: 28%;
-  left: 12%;
-}
-
-.squareMustard {
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  background: var(--mustard);
-  opacity: 0.28;
-  bottom: 24%;
-  right: 12%;
-  transform: rotate(15deg);
-}
-
 .avatarRing {
-  position: relative;
-  z-index: 2;
   width: 230px;
   height: 230px;
   border-radius: 50%;
@@ -141,23 +167,21 @@
   align-items: center;
   justify-content: center;
   background: var(--orange-pale);
+  box-shadow: 0 8px 40px rgba(30, 26, 20, 0.3);
 }
 
 .avatar {
   width: 208px;
   height: 208px;
   border-radius: 50%;
-  background: var(--sand);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.avatar span {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--warm-brown);
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 /* ── Scroll indicator ── */
@@ -176,6 +200,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  z-index: 5;
 }
 
 .scrollLine {
@@ -205,6 +230,10 @@
     text-align: center;
   }
 
+  .heroOverlay {
+    background: rgba(245, 239, 224, 0.7);
+  }
+
   .tagline {
     max-width: 100%;
     margin-left: auto;
@@ -216,7 +245,7 @@
   }
 
   .visual {
-    height: 300px;
+    height: 360px;
   }
 
   .scrollIndicator {

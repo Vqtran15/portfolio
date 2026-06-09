@@ -44,9 +44,9 @@ const About = () => (
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          I'm a full-stack developer passionate about building thoughtful digital experiences
-          that balance form and function. I love the intersection of clean code and great design —
-          where technology meets creativity.
+          I'm a senior level implementation consultant in the SaaS industry. My day job includes
+          the technical implementation of Contentsquare (digital experience platform) on websites
+          and mobile apps.
         </motion.p>
         <motion.p
           className={styles.bio}
@@ -56,8 +56,10 @@ const About = () => (
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          When I'm not coding, you'll find me exploring mid-century design, experimenting with
-          generative art, or hunting for the perfect cup of coffee.
+          Beyond the technical stack, I am deeply committed to community leadership. I serve as
+          the Board Chair for the American Foundation for Suicide Prevention (AFSP) Oregon Chapter,
+          where I help lead the Chapter to save lives and bring hope to those affected by suicide
+          across the state.
         </motion.p>
         <motion.a
           href="#contact"
