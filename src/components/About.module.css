@@ -127,8 +127,12 @@
 }
 
 .skillBadge:hover {
-  background: rgba(212, 82, 26, 0.15);
+  background: rgba(212, 82, 26, 0.18);
   border-color: var(--orange);
+}
+
+.orbitPaused {
+  animation-play-state: paused;
 }
 
 .badgeName {
@@ -284,5 +288,19 @@
 
   .section {
     padding: 5rem 1.5rem;
+  }
+
+  .right {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .badgeCloud {
+    justify-content: flex-start;
+  }
+
+  .timeline {
+    margin-top: 1.5rem;
   }
 }

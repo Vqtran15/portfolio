@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
@@ -24,48 +24,6 @@ const ExternalIcon = () => (
     <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
   </svg>
 )
-
-const FlipCard = ({ project, colorClass, index }) => {
-  const [flipped, setFlipped] = useState(false)
-  return (
-    <motion.div
-      className={styles.flipWrapper}
-      variants={cardVariants}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
-    >
-      <div className={`${styles.card} ${colorClass} ${flipped ? styles.cardFlipped : ''}`}>
-        <div className={styles.cardFront}>
-          <div className={styles.cardAccent} />
-          <div className={styles.cardBody}>
-            <h3 className={styles.cardTitle}>{project.title}</h3>
-            <p className={styles.cardDesc}>{project.description}</p>
-            <div className={styles.tech}>
-              {project.tech.map((t, j) => (
-                <span key={j} className={styles.pill}>{t}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className={styles.cardBack}>
-          <span className={styles.backTitle}>{project.title}</span>
-          <p className={styles.backDesc}>{project.description}</p>
-          <div className={styles.cardLinks}>
-            <a href={project.github} className={styles.linkBtn} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-              <GithubIcon /> GitHub
-            </a>
-            {project.live && (
-              <a href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} aria-label="Live site" target="_blank" rel="noopener noreferrer">
-                <ExternalIcon /> Live Site
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
 
 const Projects = () => (
   <section id="projects" className={styles.section}>
@@ -100,7 +58,34 @@ const Projects = () => (
       {projects.map((project, i) => {
         const colorClass = project.color === 'green' ? styles.cardGreen : styles.cardOrange
         return (
-          <FlipCard key={i} project={project} colorClass={colorClass} index={i} />
+          <motion.div
+            key={i}
+            className={`${styles.card} ${colorClass}`}
+            variants={cardVariants}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            whileHover={{ y: -6 }}
+          >
+            <div className={styles.cardAccent} />
+            <div className={styles.cardBody}>
+              <h3 className={styles.cardTitle}>{project.title}</h3>
+              <p className={styles.cardDesc}>{project.description}</p>
+              <div className={styles.tech}>
+                {project.tech.map((t, j) => (
+                  <span key={j} className={styles.pill}>{t}</span>
+                ))}
+              </div>
+            </div>
+            <div className={styles.cardLinks}>
+              <a href={project.github} className={styles.linkBtn} target="_blank" rel="noopener noreferrer">
+                <GithubIcon /> GitHub
+              </a>
+              {project.live && (
+                <a href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} target="_blank" rel="noopener noreferrer">
+                  <ExternalIcon /> Live Site
+                </a>
+              )}
+            </div>
+          </motion.div>
         )
       })}
     </motion.div>

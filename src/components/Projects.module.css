@@ -31,58 +31,60 @@
   gap: 1.75rem;
 }
 
-/* ── Flip card ── */
-
-.flipWrapper {
-  perspective: 1000px;
-  height: 320px;
-}
+/* ── Card ── */
 
 .card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-}
-
-.cardFlipped {
-  transform: rotateY(180deg);
-}
-
-/* Front */
-.cardFront,
-.cardBack {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   display: flex;
   flex-direction: column;
+  background: var(--cream);
+  box-shadow: 0 2px 12px rgba(30, 26, 20, 0.08);
+  transition: box-shadow 0.25s ease;
+  position: relative;
   overflow: hidden;
 }
 
-.cardFront {
-  background: var(--cream);
+.card:hover {
+  box-shadow: 0 8px 32px rgba(30, 26, 20, 0.16);
 }
 
-.cardBack {
-  transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  padding: 2rem;
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.cardOrange .cardBack { background: var(--orange); }
-.cardGreen  .cardBack { background: var(--green); }
+.cardOrange::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(212, 82, 26, 0.1) 0%,
+    rgba(245, 212, 191, 0.3) 60%,
+    rgba(245, 212, 191, 0.12) 100%
+  );
+}
+
+.cardGreen::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(61, 107, 53, 0.1) 0%,
+    rgba(197, 217, 192, 0.3) 60%,
+    rgba(197, 217, 192, 0.12) 100%
+  );
+}
+
+.card:hover::after {
+  transform: scaleY(1);
+}
 
 .cardAccent {
   height: 5px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 .cardOrange .cardAccent { background: var(--orange); }
 .cardGreen  .cardAccent { background: var(--green); }
@@ -90,6 +92,8 @@
 .cardBody {
   padding: 1.75rem;
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .cardTitle {
@@ -127,30 +131,15 @@
   color: var(--green);
 }
 
-/* Back face content */
-.backTitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--cream);
-  text-align: center;
-}
-
-.backDesc {
-  font-family: 'Karla', sans-serif;
-  font-size: 0.9rem;
-  color: rgba(245, 239, 224, 0.85);
-  text-align: center;
-  line-height: 1.65;
-}
-
-/* ── Card links (on back face) ── */
+/* ── Card links ── */
 
 .cardLinks {
   display: flex;
   gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  padding: 1.25rem 1.75rem;
+  border-top: 1px solid rgba(30, 26, 20, 0.08);
+  position: relative;
+  z-index: 1;
 }
 
 .linkBtn {
@@ -162,27 +151,46 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--cream);
-  padding: 0.5rem 1rem;
-  border: 1.5px solid rgba(245,239,224,0.5);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  color: var(--warm-brown);
+  padding: 0.4rem 0.85rem;
+  border: 1.5px solid rgba(30, 26, 20, 0.2);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .linkBtn:hover {
-  background: rgba(245,239,224,0.15);
-  border-color: var(--cream);
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.cardGreen .linkBtn:hover {
+  border-color: var(--green);
+  color: var(--green);
 }
 
 .linkBtnPrimary {
-  background: rgba(245,239,224,0.18);
-  border-color: var(--cream);
+  background: var(--orange-pale);
+  border-color: transparent;
+  color: var(--orange);
+}
+
+.cardGreen .linkBtnPrimary {
+  background: var(--green-pale);
+  color: var(--green);
 }
 
 .linkBtnPrimary:hover {
-  background: rgba(245,239,224,0.32);
+  background: var(--orange);
+  color: var(--cream);
+  border-color: var(--orange);
 }
 
-/* ── Responsive ── */
+.cardGreen .linkBtnPrimary:hover {
+  background: var(--green);
+  color: var(--cream);
+  border-color: var(--green);
+}
+
+/* ── Cooking footer ── */
 
 .cookingFooter {
   display: flex;

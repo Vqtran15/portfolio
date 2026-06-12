@@ -1,5 +1,5 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef, useState } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import * as styles from './About.module.css'
 import { projects, techCategoryMap } from '../data/projects'
 
@@ -26,6 +26,45 @@ const timeline = [
   { year: '2022', label: 'Joined Contentsquare as Implementation Consultant' },
   { year: '2026', label: 'Building full-stack apps alongside Claude' },
 ]
+
+const MagneticBadge = ({ skill, index }) => {
+  const ref = useRef(null)
+  const [hovered, setHovered] = useState(false)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 250, damping: 18 })
+  const springY = useSpring(y, { stiffness: 250, damping: 18 })
+
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect()
+    x.set((e.clientX - (rect.left + rect.width / 2)) * 0.35)
+    y.set((e.clientY - (rect.top + rect.height / 2)) * 0.35)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+    setHovered(false)
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ x: springX, y: springY }}
+      onMouseMove={(e) => { handleMouseMove(e); setHovered(true) }}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, scale: 0.6 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: 0.1 * index, ease: 'backOut' }}
+    >
+      <span className={`${styles.skillBadge} ${styles['orbit' + (index % 6)]} ${hovered ? styles.orbitPaused : ''}`}>
+        <span className={styles.badgeName}>{skill.name}</span>
+        <span className={styles.badgeCat}>{skill.category}</span>
+      </span>
+    </motion.div>
+  )
+}
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 36 },
@@ -101,18 +140,7 @@ const About = () => (
           {skills.flatMap(group =>
             group.items.map(name => ({ name, category: group.category }))
           ).map((skill, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 * i, ease: 'backOut' }}
-            >
-              <span className={`${styles.skillBadge} ${styles['orbit' + (i % 6)]}`}>
-                <span className={styles.badgeName}>{skill.name}</span>
-                <span className={styles.badgeCat}>{skill.category}</span>
-              </span>
-            </motion.div>
+            <MagneticBadge key={i} skill={skill} index={i} />
           ))}
         </div>
 
