@@ -64,10 +64,11 @@ const About = () => (
           transition={{ delay: 0.2 }}
         >
           My name is Vuong and I'm a Principal Implementation Consultant at Contentsquare, leading
-          the implementation function across websites and mobile apps. But my passion for building
-          goes beyond the day job. My technical journey started back in 2020 when I taught myself
-          HTML, CSS, JavaScript, React, and Python. Fast forward to 2026 — I'm leveraging those
-          foundational skills to build applications alongside Claude.
+          the implementation function across websites and mobile apps. However, my passion for
+          building goes beyond my day job. My technical journey started back in 2020 when I taught
+          myself HTML, CSS, JavaScript, React, and Python. You'll find some of those old projects
+          in my Github. Fast forward to 2026 — I'm leveraging those foundational skills to build
+          applications alongside Claude.
         </motion.p>
         <motion.p
           className={styles.bio}
@@ -77,10 +78,8 @@ const About = () => (
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          This portfolio was built using React and Gatsby, and my full stack coffee log application
-          is featured below. I'll be enhancing that app while building new projects designed to
-          solve practical, everyday problems. For me, designing and building products with a
-          seamless user experience is where the real fun is. Thank you for visiting my portfolio!
+          For me, designing and building products with a seamless user experience is where the real
+          fun is. Thank you for visiting my portfolio!
         </motion.p>
 
         <motion.a
