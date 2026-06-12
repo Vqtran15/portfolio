@@ -2,7 +2,7 @@ export const projects = [
   {
     title: 'Portfolio Website',
     description: "This is my portfolio website! I had so much fun implementing animations and building this site.",
-    tech: ['React', 'Gatsby'],
+    tech: ['React', 'Gatsby', 'Google Tag Manager', 'Google Analytics'],
     color: 'orange',
     github: 'https://github.com/Vqtran15/portfolio',
   },
@@ -22,6 +22,8 @@ export const techCategoryMap = {
   'React':               'Frontend',
   'Gatsby':              'Frontend',
   'Vite':                'Tools',
+  'Google Tag Manager':  'Tools',
+  'Google Analytics':    'Tools',
   'Tailwind CSS':        'Frontend',
   'Supabase PostgreSQL': 'Backend',
   'Vercel':              'Tools',
