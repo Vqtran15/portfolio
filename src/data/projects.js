@@ -9,7 +9,7 @@ export const projects = [
   {
     title: 'Coffee Log',
     description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios.',
-    tech: ['React', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     color: 'green',
     github: 'https://github.com/Vqtran15/coffee-log',
     live: 'https://coffee-log-pearl.vercel.app/',
@@ -21,6 +21,7 @@ export const projects = [
 export const techCategoryMap = {
   'React':               'Frontend',
   'Gatsby':              'Frontend',
+  'Vite':                'Tools',
   'Tailwind CSS':        'Frontend',
   'Supabase PostgreSQL': 'Backend',
   'Vercel':              'Tools',
