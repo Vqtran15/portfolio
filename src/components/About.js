@@ -122,6 +122,7 @@ const About = () => (
         </motion.p>
 
         <motion.a
+          id="about-cta-get-in-touch"
           href="#contact"
           className={styles.cta}
           variants={fadeInUp}

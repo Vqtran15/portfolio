@@ -204,8 +204,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1.0 }}
         >
-          <a href="#projects" className={styles.btnPrimary}>View My Work</a>
+          <a id="hero-cta-view-work" href="#projects" className={styles.btnPrimary}>View My Work</a>
           <a
+            id="hero-cta-about-me"
             href="#about"
             className={styles.btnSecondary}
             onClick={(e) => {

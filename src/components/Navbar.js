@@ -12,15 +12,15 @@ const Navbar = () => {
 
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
-      <a href="#home" className={styles.logo}>VT</a>
+      <a id="nav-logo" href="#home" className={styles.logo}>VT</a>
       <ul className={styles.links}>
-        <li><a href="#about" onClick={(e) => {
+        <li><a id="nav-about" href="#about" onClick={(e) => {
           e.preventDefault()
           const el = document.getElementById('about')
           if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' })
         }}>About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a id="nav-projects" href="#projects">Projects</a></li>
+        <li><a id="nav-contact" href="#contact">Contact</a></li>
       </ul>
     </nav>
   )

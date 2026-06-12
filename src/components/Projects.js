@@ -57,6 +57,7 @@ const Projects = () => (
     >
       {projects.map((project, i) => {
         const colorClass = project.color === 'green' ? styles.cardGreen : styles.cardOrange
+        const slug = project.title.toLowerCase().replace(/\s+/g, '-')
         return (
           <motion.div
             key={i}
@@ -76,11 +77,11 @@ const Projects = () => (
               </div>
             </div>
             <div className={styles.cardLinks}>
-              <a href={project.github} className={styles.linkBtn} target="_blank" rel="noopener noreferrer">
+              <a id={`project-${slug}-github`} href={project.github} className={styles.linkBtn} target="_blank" rel="noopener noreferrer">
                 <GithubIcon /> GitHub
               </a>
               {project.live && (
-                <a href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} target="_blank" rel="noopener noreferrer">
+                <a id={`project-${slug}-live-site`} href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} target="_blank" rel="noopener noreferrer">
                   <ExternalIcon /> Live Site
                 </a>
               )}

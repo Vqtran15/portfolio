@@ -15,6 +15,7 @@ const BackToTop = () => {
     <AnimatePresence>
       {visible && (
         <motion.button
+          id="btn-back-to-top"
           className={styles.btn}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           initial={{ opacity: 0, y: 20 }}

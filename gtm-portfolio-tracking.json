@@ -1,0 +1,303 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-06-12 12:00:00",
+  "containerVersion": {
+    "path": "accounts/0/containers/0/versions/0",
+    "accountId": "0",
+    "containerId": "0",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/0/containers/0",
+      "accountId": "0",
+      "containerId": "0",
+      "name": "Portfolio",
+      "publicId": "GTM-PPXSLX26",
+      "usageContext": ["WEB"]
+    },
+    "builtInVariable": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "type": "CLICK_ELEMENT",
+        "name": "Click Element"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "type": "CLICK_ID",
+        "name": "Click ID"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "type": "CLICK_TEXT",
+        "name": "Click Text"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "type": "CLICK_URL",
+        "name": "Click URL"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "type": "PAGE_PATH",
+        "name": "Page Path"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "1",
+        "name": "GA4 Event Name from Click ID",
+        "type": "smm",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "input",
+            "value": "{{Click ID}}"
+          },
+          {
+            "type": "LIST",
+            "key": "map",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "nav-logo" },
+                  { "type": "TEMPLATE", "key": "value", "value": "nav_logo_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "nav-about" },
+                  { "type": "TEMPLATE", "key": "value", "value": "nav_about_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "nav-projects" },
+                  { "type": "TEMPLATE", "key": "value", "value": "nav_projects_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "nav-contact" },
+                  { "type": "TEMPLATE", "key": "value", "value": "nav_contact_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "hero-cta-view-work" },
+                  { "type": "TEMPLATE", "key": "value", "value": "hero_view_work_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "hero-cta-about-me" },
+                  { "type": "TEMPLATE", "key": "value", "value": "hero_about_me_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "about-cta-get-in-touch" },
+                  { "type": "TEMPLATE", "key": "value", "value": "about_get_in_touch_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "project-portfolio-website-github" },
+                  { "type": "TEMPLATE", "key": "value", "value": "project_portfolio_github_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "project-coffee-log-github" },
+                  { "type": "TEMPLATE", "key": "value", "value": "project_coffee_log_github_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "project-coffee-log-live-site" },
+                  { "type": "TEMPLATE", "key": "value", "value": "project_coffee_log_live_site_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "contact-email" },
+                  { "type": "TEMPLATE", "key": "value", "value": "contact_email_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "contact-linkedin" },
+                  { "type": "TEMPLATE", "key": "value", "value": "contact_linkedin_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "contact-github" },
+                  { "type": "TEMPLATE", "key": "value", "value": "contact_github_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "btn-back-to-top" },
+                  { "type": "TEMPLATE", "key": "value", "value": "back_to_top_click" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "defaultValue",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "1",
+        "name": "Portfolio - Tracked Element Click",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click ID}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(nav-logo|nav-about|nav-projects|nav-contact|hero-cta-view-work|hero-cta-about-me|about-cta-get-in-touch|project-portfolio-website-github|project-coffee-log-github|project-coffee-log-live-site|contact-email|contact-linkedin|contact-github|btn-back-to-top)$"
+              }
+            ]
+          }
+        ],
+        "waitForTags": { "type": "BOOLEAN", "value": "false" },
+        "checkValidation": { "type": "BOOLEAN", "value": "false" },
+        "waitForTagsTimeout": { "type": "TEMPLATE", "value": "2000" }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "2",
+        "name": "All Pages",
+        "type": "PAGEVIEW"
+      }
+    ],
+    "tag": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "1",
+        "name": "GA4 Configuration",
+        "type": "gaawc",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "measurementId",
+            "value": "G-3ZBP0FRWWQ"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "sendPageView",
+            "value": "true"
+          }
+        ],
+        "firingTriggerId": ["2"],
+        "tagFiringOption": "ONCE_PER_LOAD",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "2",
+        "name": "GA4 Event - Portfolio Click Tracking",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Configuration"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{GA4 Event Name from Click ID}}"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name",  "value": "element_id" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click ID}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name",  "value": "click_text" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click Text}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name",  "value": "click_url" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click URL}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name",  "value": "page_path" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Page Path}}" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enhancedUserId",
+            "value": "false"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      }
+    ]
+  }
+}
