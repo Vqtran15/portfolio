@@ -9,6 +9,7 @@ export const Head = () => (
   <>
     <title>Vuong Tran — Portfolio</title>
     <meta name="description" content="Principal Implementation Consultant" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </>
 )
 

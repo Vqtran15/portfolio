@@ -1,0 +1,27 @@
+export const projects = [
+  {
+    title: 'Portfolio Website',
+    description: "This is my portfolio website! I had so much fun implementing animations and building this site.",
+    tech: ['React', 'Gatsby'],
+    color: 'orange',
+    github: 'https://github.com/Vqtran15/portfolio',
+  },
+  {
+    title: 'Coffee Log',
+    description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios.',
+    tech: ['React', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
+    color: 'green',
+    github: 'https://github.com/Vqtran15/coffee-log',
+    live: 'https://coffee-log-pearl.vercel.app/',
+  },
+]
+
+// Map each technology to a skill category for the About section.
+// Add new entries here whenever a new tech is introduced in a project.
+export const techCategoryMap = {
+  'React':               'Frontend',
+  'Gatsby':              'Frontend',
+  'Tailwind CSS':        'Frontend',
+  'Supabase PostgreSQL': 'Backend',
+  'Vercel':              'Tools',
+}

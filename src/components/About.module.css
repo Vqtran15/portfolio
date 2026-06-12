@@ -59,51 +59,206 @@
   transform: translateY(-2px);
 }
 
+/* ── AFSP Badge ── */
+
+.afsoBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(201, 160, 64, 0.08);
+  border: 1.5px solid rgba(201, 160, 64, 0.25);
+  border-radius: 2px;
+}
+
+.afsoBadgeIcon {
+  font-size: 1.4rem;
+  color: var(--mustard);
+  flex-shrink: 0;
+}
+
+.afsoBadgeTitle {
+  display: block;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--mustard);
+  letter-spacing: 0.04em;
+}
+
+.afsoBadgeSub {
+  display: block;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.78rem;
+  color: var(--sand);
+  margin-top: 0.15rem;
+}
+
 /* ── Skills ── */
 
 .right {
   display: flex;
-  flex-direction: column;
-  gap: 2.25rem;
-  padding-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
 }
 
-.skillGroup {
-  border-left: 3px solid var(--orange);
-  padding-left: 1.5rem;
-}
-
-.skillCategory {
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 0.875rem;
-}
-
-.skillItems {
+.badgeCloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1.25rem;
+  justify-content: center;
 }
 
+/* Each badge is a wrapper for the orbit CSS animation */
 .skillBadge {
-  font-family: 'Karla', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.35rem 0.875rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1rem 1.5rem;
   background: rgba(245, 239, 224, 0.06);
-  color: var(--cream);
-  border: 1px solid rgba(245, 239, 224, 0.12);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  border: 1.5px solid rgba(245, 239, 224, 0.15);
+  border-radius: 2px;
   cursor: default;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .skillBadge:hover {
-  background: rgba(212, 82, 26, 0.18);
+  background: rgba(212, 82, 26, 0.15);
   border-color: var(--orange);
+}
+
+.badgeName {
+  font-family: 'Karla', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.badgeCat {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ── Orbital animations — 6 scrambled paths ── */
+
+@keyframes orbit0 {
+  0%   { transform: translate( 6px,  0px); }
+  25%  { transform: translate( 0px, -6px); }
+  50%  { transform: translate(-6px,  0px); }
+  75%  { transform: translate( 0px,  6px); }
+  100% { transform: translate( 6px,  0px); }
+}
+@keyframes orbit1 {
+  0%   { transform: translate(  0px, -9px); }
+  25%  { transform: translate(  9px,  0px); }
+  50%  { transform: translate(  0px,  9px); }
+  75%  { transform: translate( -9px,  0px); }
+  100% { transform: translate(  0px, -9px); }
+}
+@keyframes orbit2 {
+  0%   { transform: translate(-5px,  5px); }
+  25%  { transform: translate( 5px,  5px); }
+  50%  { transform: translate( 5px, -5px); }
+  75%  { transform: translate(-5px, -5px); }
+  100% { transform: translate(-5px,  5px); }
+}
+@keyframes orbit3 {
+  0%   { transform: translate( 8px, -4px); }
+  25%  { transform: translate( 4px,  8px); }
+  50%  { transform: translate(-8px,  4px); }
+  75%  { transform: translate(-4px, -8px); }
+  100% { transform: translate( 8px, -4px); }
+}
+@keyframes orbit4 {
+  0%   { transform: translate(-7px, -3px); }
+  25%  { transform: translate( 3px, -7px); }
+  50%  { transform: translate( 7px,  3px); }
+  75%  { transform: translate(-3px,  7px); }
+  100% { transform: translate(-7px, -3px); }
+}
+@keyframes orbit5 {
+  0%   { transform: translate( 4px,  7px); }
+  25%  { transform: translate(-7px,  4px); }
+  50%  { transform: translate(-4px, -7px); }
+  75%  { transform: translate( 7px, -4px); }
+  100% { transform: translate( 4px,  7px); }
+}
+
+.orbit0 { animation: orbit0 5.0s linear infinite; }
+.orbit1 { animation: orbit1 6.5s linear infinite; }
+.orbit2 { animation: orbit2 4.5s linear infinite; }
+.orbit3 { animation: orbit3 7.0s linear infinite; }
+.orbit4 { animation: orbit4 5.5s linear infinite; }
+.orbit5 { animation: orbit5 4.0s linear infinite; }
+
+/* ── Timeline ── */
+
+.timeline {
+  width: 100%;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 3rem 1.25rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-left: none;
+  position: relative;
+}
+
+.timelineItem::before {
+  content: '';
+  position: absolute;
+  left: calc(3rem + 0.75rem + 0.6rem);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(245, 239, 224, 0.1);
+}
+
+.timelineItem:last-child::before {
+  display: none;
+}
+
+.timelineYear {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+
+.timelineDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 2px solid var(--dark);
+  box-shadow: 0 0 0 2px var(--orange);
+  flex-shrink: 0;
+  justify-self: center;
+}
+
+.timelineLabel {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.88rem;
+  color: var(--sand);
+  line-height: 1.4;
 }
 
 /* ── Decorative ring ── */

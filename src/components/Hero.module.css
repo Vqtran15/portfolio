@@ -32,6 +32,16 @@
   animation: floatBob 4s ease-in-out infinite;
 }
 
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 0.08; }
+}
+
+.star {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
 /* Gradient fades the left half so text stays legible */
 .heroOverlay {
   position: absolute;
@@ -168,6 +178,28 @@
   justify-content: center;
   background: var(--orange-pale);
   box-shadow: 0 8px 40px rgba(30, 26, 20, 0.3);
+  position: relative;
+}
+
+@keyframes spinBorder {
+  to { transform: rotate(360deg); }
+}
+
+.avatarRing::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--orange-light);
+  border-bottom-color: var(--mustard);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.avatarRing:hover::after {
+  opacity: 1;
+  animation: spinBorder 1.2s linear infinite;
 }
 
 .avatar {

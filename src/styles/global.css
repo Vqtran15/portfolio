@@ -25,6 +25,11 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes treeSway {
+  from { transform: skewX(-3deg); }
+  to   { transform: skewX(3deg); }
+}
+
 body {
   font-family: 'Karla', sans-serif;
   background-color: var(--cream);

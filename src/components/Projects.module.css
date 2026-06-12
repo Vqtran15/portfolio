@@ -31,29 +31,61 @@
   gap: 1.75rem;
 }
 
-/* ── Card ── */
+/* ── Flip card ── */
+
+.flipWrapper {
+  perspective: 1000px;
+  height: 320px;
+}
 
 .card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.cardFlipped {
+  transform: rotateY(180deg);
+}
+
+/* Front */
+.cardFront,
+.cardBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--cream);
   overflow: hidden;
-  transition: box-shadow 0.25s ease;
 }
 
-.card:hover {
-  box-shadow: 0 14px 44px rgba(30, 26, 20, 0.1);
+.cardFront {
+  background: var(--cream);
 }
 
-.cardOrange .cardAccent {
+.cardBack {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem;
+}
+
+.cardOrange .cardBack { background: var(--orange); }
+.cardGreen  .cardBack { background: var(--green); }
+
+.cardAccent {
   height: 5px;
-  background: var(--orange);
+  flex-shrink: 0;
 }
-
-.cardGreen .cardAccent {
-  height: 5px;
-  background: var(--green);
-}
+.cardOrange .cardAccent { background: var(--orange); }
+.cardGreen  .cardAccent { background: var(--green); }
 
 .cardBody {
   padding: 1.75rem;
@@ -95,13 +127,30 @@
   color: var(--green);
 }
 
-/* ── Card links ── */
+/* Back face content */
+.backTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-align: center;
+}
+
+.backDesc {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(245, 239, 224, 0.85);
+  text-align: center;
+  line-height: 1.65;
+}
+
+/* ── Card links (on back face) ── */
 
 .cardLinks {
   display: flex;
   gap: 0.75rem;
-  padding: 1.25rem 1.75rem;
-  border-top: 1px solid var(--sand);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .linkBtn {
@@ -113,30 +162,69 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--warm-brown);
-  padding: 0.4rem 0.8rem;
-  border: 1.5px solid var(--sand);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  color: var(--cream);
+  padding: 0.5rem 1rem;
+  border: 1.5px solid rgba(245,239,224,0.5);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .linkBtn:hover {
-  border-color: var(--dark);
-  color: var(--dark);
+  background: rgba(245,239,224,0.15);
+  border-color: var(--cream);
 }
 
 .linkBtnPrimary {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: var(--cream);
+  background: rgba(245,239,224,0.18);
+  border-color: var(--cream);
 }
 
 .linkBtnPrimary:hover {
-  background: var(--orange-light);
-  border-color: var(--orange-light);
-  color: var(--cream);
+  background: rgba(245,239,224,0.32);
 }
 
 /* ── Responsive ── */
+
+.cookingFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+}
+
+.cookingText {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm-brown);
+}
+
+.pot {
+  width: 64px;
+  height: 64px;
+}
+
+@keyframes steamRise1 {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+  30%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-22px) scaleX(1.4); }
+}
+@keyframes steamRise2 {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+  30%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-22px) scaleX(1.4); }
+}
+@keyframes steamRise3 {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+  30%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-22px) scaleX(1.4); }
+}
+
+.steam1 { animation: steamRise1 1.8s ease-out infinite; }
+.steam2 { animation: steamRise2 1.8s ease-out infinite 0.6s; }
+.steam3 { animation: steamRise3 1.8s ease-out infinite 1.2s; }
 
 @media (max-width: 1024px) {
   .grid {

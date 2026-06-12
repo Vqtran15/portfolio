@@ -1,57 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
-
-const projects = [
-  {
-    title: 'Recipe Finder App',
-    description: 'A full-stack app to search, save, and share recipes with user authentication and a dynamic ingredient filter.',
-    tech: ['React', 'Node.js', 'MongoDB'],
-    color: 'orange',
-    github: '#',
-    live: '#',
-  },
-  {
-    title: 'Weather Dashboard',
-    description: 'Real-time weather visualization with 7-day forecasts, interactive maps, and location-based alerts.',
-    tech: ['TypeScript', 'React', 'OpenWeather API'],
-    color: 'green',
-    github: '#',
-    live: '#',
-  },
-  {
-    title: 'Task Manager',
-    description: 'Collaborative project management with drag-and-drop boards, team workspaces, and real-time updates.',
-    tech: ['Next.js', 'Prisma', 'PostgreSQL'],
-    color: 'orange',
-    github: '#',
-    live: '#',
-  },
-  {
-    title: 'Portfolio Generator',
-    description: 'A JAMstack tool that generates static portfolio sites from a single config file. Deploy with one click.',
-    tech: ['Gatsby', 'GraphQL', 'Netlify'],
-    color: 'green',
-    github: '#',
-    live: '#',
-  },
-  {
-    title: 'Chat Application',
-    description: 'Real-time messaging with rooms, file sharing, read receipts, and end-to-end encryption.',
-    tech: ['Socket.io', 'Express', 'React'],
-    color: 'orange',
-    github: '#',
-    live: '#',
-  },
-  {
-    title: 'E-commerce Store',
-    description: 'A production-ready storefront with cart, checkout, Stripe payments, and an admin dashboard.',
-    tech: ['React', 'Stripe', 'Firebase'],
-    color: 'green',
-    github: '#',
-    live: '#',
-  },
-]
+import { projects } from '../data/projects'
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -74,6 +24,48 @@ const ExternalIcon = () => (
     <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
   </svg>
 )
+
+const FlipCard = ({ project, colorClass, index }) => {
+  const [flipped, setFlipped] = useState(false)
+  return (
+    <motion.div
+      className={styles.flipWrapper}
+      variants={cardVariants}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <div className={`${styles.card} ${colorClass} ${flipped ? styles.cardFlipped : ''}`}>
+        <div className={styles.cardFront}>
+          <div className={styles.cardAccent} />
+          <div className={styles.cardBody}>
+            <h3 className={styles.cardTitle}>{project.title}</h3>
+            <p className={styles.cardDesc}>{project.description}</p>
+            <div className={styles.tech}>
+              {project.tech.map((t, j) => (
+                <span key={j} className={styles.pill}>{t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={styles.cardBack}>
+          <span className={styles.backTitle}>{project.title}</span>
+          <p className={styles.backDesc}>{project.description}</p>
+          <div className={styles.cardLinks}>
+            <a href={project.github} className={styles.linkBtn} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+              <GithubIcon /> GitHub
+            </a>
+            {project.live && (
+              <a href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} aria-label="Live site" target="_blank" rel="noopener noreferrer">
+                <ExternalIcon /> Live Site
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 const Projects = () => (
   <section id="projects" className={styles.section}>
@@ -105,35 +97,31 @@ const Projects = () => (
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
-      {projects.map((project, i) => (
-        <motion.div
-          key={i}
-          className={`${styles.card} ${project.color === 'green' ? styles.cardGreen : styles.cardOrange}`}
-          variants={cardVariants}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          whileHover={{ y: -6, transition: { duration: 0.2 } }}
-        >
-          <div className={styles.cardAccent} />
-          <div className={styles.cardBody}>
-            <h3 className={styles.cardTitle}>{project.title}</h3>
-            <p className={styles.cardDesc}>{project.description}</p>
-            <div className={styles.tech}>
-              {project.tech.map((t, j) => (
-                <span key={j} className={styles.pill}>{t}</span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.cardLinks}>
-            <a href={project.github} className={styles.linkBtn} aria-label="GitHub repository">
-              <GithubIcon /> GitHub
-            </a>
-            <a href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} aria-label="Live site">
-              <ExternalIcon /> Live Site
-            </a>
-          </div>
-        </motion.div>
-      ))}
+      {projects.map((project, i) => {
+        const colorClass = project.color === 'green' ? styles.cardGreen : styles.cardOrange
+        return (
+          <FlipCard key={i} project={project} colorClass={colorClass} index={i} />
+        )
+      })}
     </motion.div>
+
+    <div className={styles.cookingFooter}>
+      <svg className={styles.pot} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        {/* Steam */}
+        <ellipse className={styles.steam1} cx="22" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+        <ellipse className={styles.steam2} cx="32" cy="15" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+        <ellipse className={styles.steam3} cx="42" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+        {/* Lid */}
+        <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
+        <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
+        {/* Pot body */}
+        <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
+        {/* Handles */}
+        <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+        <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+      </svg>
+      <span className={styles.cookingText}>More projects cooking</span>
+    </div>
   </section>
 )
 
