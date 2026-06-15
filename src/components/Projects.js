@@ -56,7 +56,7 @@ const Projects = () => (
       viewport={{ once: true, amount: 0.1 }}
     >
       {projects.map((project, i) => {
-        const colorClass = project.color === 'green' ? styles.cardGreen : styles.cardOrange
+        const colorClass = i % 2 === 0 ? styles.cardOrange : styles.cardGreen
         const slug = project.title.toLowerCase().replace(/\s+/g, '-')
         return (
           <motion.div
