@@ -26,8 +26,8 @@ html {
 }
 
 @keyframes treeSway {
-  from { transform: skewX(-3deg); }
-  to   { transform: skewX(3deg); }
+  from { transform: rotate(-8deg); }
+  to   { transform: rotate(8deg); }
 }
 
 body {
