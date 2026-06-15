@@ -7,6 +7,14 @@ export const projects = [
     github: 'https://github.com/Vqtran15/portfolio',
   },
   {
+    title: 'To-Do List',
+    description: 'Move your to-do list into an app and categorize them!',
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
+    color: 'orange',
+    github: 'https://github.com/Vqtran15/todo-list',
+    live: 'https://todo-list-vuong-tran.vercel.app',
+  },
+  {
     title: 'Coffee Log',
     description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios.',
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
