@@ -48,7 +48,10 @@ const FlipCard = ({ project, colorClass, index }) => {
               />
               <div className={styles.frontOverlay}>
                 <span className={styles.frontTitle}>{project.title}</span>
-                <span className={styles.frontHint}>Click to learn more</span>
+                <span className={styles.frontHint}>
+                  <span className={styles.hintClick}>Click to learn more</span>
+                  <span className={styles.hintTap}>Tap to learn more</span>
+                </span>
               </div>
             </>
           ) : (

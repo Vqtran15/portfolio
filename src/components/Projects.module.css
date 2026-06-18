@@ -133,6 +133,13 @@
   color: rgba(245, 239, 224, 0.6);
 }
 
+.hintTap { display: none; }
+
+@media (hover: none) {
+  .hintClick { display: none; }
+  .hintTap   { display: inline; }
+}
+
 .frontNoImage {
   width: 100%;
   height: 100%;
