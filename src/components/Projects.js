@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-}
-
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.11 } },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
 const GithubIcon = () => (
@@ -24,6 +24,79 @@ const ExternalIcon = () => (
     <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
   </svg>
 )
+
+const FlipCard = ({ project, colorClass, index }) => {
+  const [flipped, setFlipped] = useState(false)
+  const slug = project.title.toLowerCase().replace(/\s+/g, '-')
+
+  return (
+    <motion.div
+      className={styles.flipWrapper}
+      variants={cardVariants}
+      onClick={() => setFlipped(f => !f)}
+    >
+      <div className={`${styles.card} ${colorClass} ${flipped ? styles.cardFlipped : ''}`}>
+
+        {/* Front — screenshot */}
+        <div className={styles.cardFront}>
+          {project.screenshot ? (
+            <>
+              <img
+                src={project.screenshot}
+                alt={`${project.title} screenshot`}
+                className={styles.screenshotImg}
+              />
+              <div className={styles.frontOverlay}>
+                <span className={styles.frontTitle}>{project.title}</span>
+                <span className={styles.frontHint}>Click to learn more</span>
+              </div>
+            </>
+          ) : (
+            <div className={styles.frontNoImage}>
+              <span className={styles.frontTitle}>{project.title}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Back — details */}
+        <div className={styles.cardBack}>
+          <h3 className={styles.backTitle}>{project.title}</h3>
+          <p className={styles.backDesc}>{project.description}</p>
+          <div className={styles.backTech}>
+            {project.tech.map((t, j) => (
+              <span key={j} className={styles.backPill}>{t}</span>
+            ))}
+          </div>
+          <div className={styles.backLinks}>
+            <a
+              id={`project-${slug}-github`}
+              href={project.github}
+              className={styles.linkBtn}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+            >
+              <GithubIcon /> GitHub
+            </a>
+            {project.live && (
+              <a
+                id={`project-${slug}-live-site`}
+                href={project.live}
+                className={`${styles.linkBtn} ${styles.linkBtnPrimary}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+              >
+                <ExternalIcon /> Live Site
+              </a>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </motion.div>
+  )
+}
 
 const Projects = () => (
   <section id="projects" className={styles.section}>
@@ -57,52 +130,18 @@ const Projects = () => (
     >
       {projects.map((project, i) => {
         const colorClass = i % 2 === 0 ? styles.cardOrange : styles.cardGreen
-        const slug = project.title.toLowerCase().replace(/\s+/g, '-')
-        return (
-          <motion.div
-            key={i}
-            className={`${styles.card} ${colorClass}`}
-            variants={cardVariants}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            whileHover={{ y: -6 }}
-          >
-            <div className={styles.cardAccent} />
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>{project.title}</h3>
-              <p className={styles.cardDesc}>{project.description}</p>
-              <div className={styles.tech}>
-                {project.tech.map((t, j) => (
-                  <span key={j} className={styles.pill}>{t}</span>
-                ))}
-              </div>
-            </div>
-            <div className={styles.cardLinks}>
-              <a id={`project-${slug}-github`} href={project.github} className={styles.linkBtn} target="_blank" rel="noopener noreferrer">
-                <GithubIcon /> GitHub
-              </a>
-              {project.live && (
-                <a id={`project-${slug}-live-site`} href={project.live} className={`${styles.linkBtn} ${styles.linkBtnPrimary}`} target="_blank" rel="noopener noreferrer">
-                  <ExternalIcon /> Live Site
-                </a>
-              )}
-            </div>
-          </motion.div>
-        )
+        return <FlipCard key={i} project={project} colorClass={colorClass} index={i} />
       })}
     </motion.div>
 
     <div className={styles.cookingFooter}>
       <svg className={styles.pot} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        {/* Steam */}
         <ellipse className={styles.steam1} cx="22" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
         <ellipse className={styles.steam2} cx="32" cy="15" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
         <ellipse className={styles.steam3} cx="42" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-        {/* Lid */}
         <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
         <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
-        {/* Pot body */}
         <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
-        {/* Handles */}
         <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
         <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
       </svg>

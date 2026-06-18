@@ -4,6 +4,7 @@ export const projects = [
     description: "This is my portfolio website! I had so much fun implementing animations and building this site. I also implemented Google Tag Manager and sending custom events to Google Analytics.",
     tech: ['React', 'Gatsby', 'Google Tag Manager', 'Google Analytics'],
     github: 'https://github.com/Vqtran15/portfolio',
+    screenshot: '/images/portfolio.png',
   },
   {
     title: 'To-Do List',
@@ -11,6 +12,7 @@ export const projects = [
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/todo-list',
     live: 'https://todo-list-vuong-tran.vercel.app',
+    screenshot: '/images/to-do-list.png',
   },
   {
     title: 'Community Group App',
@@ -18,13 +20,15 @@ export const projects = [
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/community-group',
     live: 'https://bridgetown-community-group.vercel.app',
+    screenshot: '/images/community-group.png',
   },
   {
     title: 'Coffee Log',
     description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios. I use this daily ;)',
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/coffee-log',
-    live: 'https://coffee-log-public.vercel.app/',
+    live: 'https://coffee-log-pro.vercel.app/',
+    screenshot: '/images/coffee-log.png',
   },
 ]
 

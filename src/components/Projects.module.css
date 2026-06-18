@@ -31,115 +31,167 @@
   gap: 1.75rem;
 }
 
-/* ── Card ── */
+/* ── Flip card ── */
+
+.flipWrapper {
+  perspective: 1000px;
+  height: 420px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(30, 26, 20, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.flipWrapper:hover {
+  box-shadow: 0 12px 40px rgba(30, 26, 20, 0.18);
+}
 
 .card {
-  display: flex;
-  flex-direction: column;
-  background: var(--cream);
-  box-shadow: 0 2px 12px rgba(30, 26, 20, 0.08);
-  transition: box-shadow 0.25s ease;
+  width: 100%;
+  height: 100%;
   position: relative;
-  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  will-change: transform;
 }
 
-.card:hover {
-  box-shadow: 0 8px 32px rgba(30, 26, 20, 0.16);
+.cardFlipped {
+  transform: rotateY(180deg);
 }
 
-.card::after {
-  content: '';
+.cardFront,
+.cardBack {
   position: absolute;
   inset: 0;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  pointer-events: none;
-  z-index: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
-.cardOrange::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(212, 82, 26, 0.1) 0%,
-    rgba(245, 212, 191, 0.3) 60%,
-    rgba(245, 212, 191, 0.12) 100%
-  );
+/* ── Front face — screenshot ── */
+
+.cardFront {
+  background: var(--dark);
 }
 
-.cardGreen::after {
-  background: linear-gradient(
-    to bottom,
-    rgba(61, 107, 53, 0.1) 0%,
-    rgba(197, 217, 192, 0.3) 60%,
-    rgba(197, 217, 192, 0.12) 100%
-  );
+.screenshotImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  opacity: 0.92;
+  transition: opacity 0.3s ease, transform 0.4s ease;
 }
 
-.card:hover::after {
-  transform: scaleY(1);
+.flipWrapper:hover .screenshotImg {
+  opacity: 0.4;
+  transform: scale(1.04);
 }
 
-.cardAccent {
-  height: 5px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-.cardOrange .cardAccent { background: var(--orange); }
-.cardGreen  .cardAccent { background: var(--green); }
-
-.cardBody {
-  padding: 1.75rem;
-  flex: 1;
-  position: relative;
-  z-index: 1;
+.frontOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.cardTitle {
-  font-size: 1.2rem;
+.flipWrapper:hover .frontOverlay {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .screenshotImg {
+    opacity: 0.75;
+  }
+  .frontOverlay {
+    opacity: 1;
+  }
+}
+
+.frontTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--dark);
-  margin-bottom: 0.75rem;
+  color: var(--cream);
+  text-align: center;
 }
 
-.cardDesc {
-  font-size: 0.9rem;
-  color: var(--warm-brown);
+.frontHint {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 224, 0.6);
+}
+
+.frontNoImage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* ── Back face — details ── */
+
+.cardBack {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.cardOrange .cardBack { background: var(--orange); }
+.cardGreen  .cardBack { background: var(--green); }
+
+.backTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.backDesc {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(245, 239, 224, 0.88);
   line-height: 1.7;
-  margin-bottom: 1.25rem;
 }
 
-.tech {
+.backTech {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-.pill {
+.backPill {
   font-family: 'Raleway', sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  padding: 0.22rem 0.7rem;
-  background: var(--orange-pale);
-  color: var(--orange);
+  padding: 0.2rem 0.65rem;
+  background: rgba(245, 239, 224, 0.18);
+  color: var(--cream);
+  border-radius: 1px;
 }
 
-.cardGreen .pill {
-  background: var(--green-pale);
-  color: var(--green);
-}
-
-/* ── Card links ── */
-
-.cardLinks {
+.backLinks {
   display: flex;
   gap: 0.75rem;
-  padding: 1.25rem 1.75rem;
-  border-top: 1px solid rgba(30, 26, 20, 0.08);
-  position: relative;
-  z-index: 1;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
 }
 
 .linkBtn {
@@ -151,43 +203,24 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--warm-brown);
-  padding: 0.4rem 0.85rem;
-  border: 1.5px solid rgba(30, 26, 20, 0.2);
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  color: var(--cream);
+  padding: 0.45rem 1rem;
+  border: 1.5px solid rgba(245, 239, 224, 0.5);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .linkBtn:hover {
-  border-color: var(--orange);
-  color: var(--orange);
-}
-
-.cardGreen .linkBtn:hover {
-  border-color: var(--green);
-  color: var(--green);
+  background: rgba(245, 239, 224, 0.15);
+  border-color: var(--cream);
 }
 
 .linkBtnPrimary {
-  background: var(--orange-pale);
-  border-color: transparent;
-  color: var(--orange);
-}
-
-.cardGreen .linkBtnPrimary {
-  background: var(--green-pale);
-  color: var(--green);
+  background: rgba(245, 239, 224, 0.18);
+  border-color: var(--cream);
 }
 
 .linkBtnPrimary:hover {
-  background: var(--orange);
-  color: var(--cream);
-  border-color: var(--orange);
-}
-
-.cardGreen .linkBtnPrimary:hover {
-  background: var(--green);
-  color: var(--cream);
-  border-color: var(--green);
+  background: rgba(245, 239, 224, 0.32);
 }
 
 /* ── Cooking footer ── */
@@ -247,5 +280,9 @@
 
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .flipWrapper {
+    height: 380px;
   }
 }
