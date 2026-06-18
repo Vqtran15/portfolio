@@ -13,6 +13,13 @@ export const projects = [
     live: 'https://todo-list-vuong-tran.vercel.app',
   },
   {
+    title: 'Community Group App',
+    description: 'Stay organized with your community group! Offers a meal sign up that automates the next meal, service night sign up, chat functionality, and birthdays all in one app.',
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
+    github: 'https://github.com/Vqtran15/community-group',
+    live: 'https://bridgetown-community-group.vercel.app',
+  },
+  {
     title: 'Coffee Log',
     description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios. I use this daily ;)',
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],

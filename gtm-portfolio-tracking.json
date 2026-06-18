@@ -115,6 +115,20 @@
               {
                 "type": "MAP",
                 "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "project-community-group-app-github" },
+                  { "type": "TEMPLATE", "key": "value", "value": "project_community_group_app_github_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "key",   "value": "project-community-group-app-live-site" },
+                  { "type": "TEMPLATE", "key": "value", "value": "project_community_group_app_live_site_click" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
                   { "type": "TEMPLATE", "key": "key",   "value": "project-to-do-list-github" },
                   { "type": "TEMPLATE", "key": "value", "value": "project_todo_list_github_click" }
                 ]
@@ -204,7 +218,7 @@
               {
                 "type": "TEMPLATE",
                 "key": "arg1",
-                "value": "^(nav-logo|nav-about|nav-projects|nav-contact|hero-cta-view-work|hero-cta-about-me|about-cta-get-in-touch|project-to-do-list-github|project-to-do-list-live-site|project-portfolio-website-github|project-coffee-log-github|project-coffee-log-live-site|contact-email|contact-linkedin|contact-github|btn-back-to-top)$"
+                "value": "^(nav-logo|nav-about|nav-projects|nav-contact|hero-cta-view-work|hero-cta-about-me|about-cta-get-in-touch|project-community-group-app-github|project-community-group-app-live-site|project-to-do-list-github|project-to-do-list-live-site|project-portfolio-website-github|project-coffee-log-github|project-coffee-log-live-site|contact-email|contact-linkedin|contact-github|btn-back-to-top)$"
               }
             ]
           }
