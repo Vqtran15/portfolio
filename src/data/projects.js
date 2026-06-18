@@ -1,14 +1,14 @@
 export const projects = [
   {
     title: 'Portfolio Website',
-    description: "This is my portfolio website! I had so much fun implementing animations and building this site. I also implemented Google Tag Manager and sending custom events to Google Analytics.",
+    description: "A mid-century modern portfolio built with Gatsby and React — featuring hand-crafted animations, scroll-driven effects, and full click tracking via Google Tag Manager and GA4.",
     tech: ['React', 'Gatsby', 'Google Tag Manager', 'Google Analytics'],
     github: 'https://github.com/Vqtran15/portfolio',
     screenshot: '/images/portfolio.png',
   },
   {
     title: 'To-Do List',
-    description: "Move your to-do list into an app and categorize them! This is my first application using a log in and saving tasks/categories at the user level. It's also very mobile friendly! Save it as a bookmark on your homescreen.",
+    description: "My Apple Notes to-do list had grown into an unmanageable wall of text with no structure. This app solves that with categorized lists, starred priorities, and user-level task saving — all in a mobile-friendly PWA you can bookmark on your homescreen.",
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/todo-list',
     live: 'https://todo-list-vuong-tran.vercel.app',
@@ -16,7 +16,7 @@ export const projects = [
   },
   {
     title: 'Community Group App',
-    description: 'Stay organized with your community group! Offers a meal sign up that automates the next meal, service night sign up, chat functionality, and birthdays all in one app.',
+    description: "Managing our community group meant juggling a separate group chat, multiple Google Sheets for sign-ups, and still forgetting birthdays. This app brings it all together — automated meal sign-ups, service night scheduling, group chat, and birthday reminders in one place.",
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/community-group',
     live: 'https://bridgetown-community-group.vercel.app',
@@ -24,7 +24,7 @@ export const projects = [
   },
   {
     title: 'Coffee Log',
-    description: 'Log coffee recipes across different brew methods, grind sizes and coffee to water ratios. I use this daily ;)',
+    description: "Tracking brews in Apple Notes got unwieldy fast — long, unstructured, and impossible to compare. This app solves it with a clean UI for logging brew method, grind size, ratio, and tasting notes, with ratings so you can always replicate your best cup. Used daily ☕",
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/coffee-log',
     live: 'https://coffee-log-pro.vercel.app/',
