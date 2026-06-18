@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import * as styles from './Hero.module.css'
 import useScramble from '../hooks/useScramble'
 
@@ -59,8 +59,15 @@ const GREETINGS = ['Hi there,', 'Hey friend,', 'Hello,']
 // ── Hero ───────────────────────────────────────────────────────
 const Hero = () => {
   const { scrollY } = useScroll()
-  // Sun color: gold → orange → deep red as user scrolls
-  const sunColor    = useTransform(scrollY, [0, 400, 800], ['#C9A040', '#D4521A', '#8B2500'])
+  const sunColor = useTransform(scrollY, [0, 400, 800], ['#C9A040', '#D4521A', '#8B2500'])
+
+  const [burst, setBurst] = useState(false)
+  const handleAvatarClick = () => {
+    setBurst(true)
+    setTimeout(() => setBurst(false), 700)
+  }
+
+  const BURST_COLORS = ['#D4521A', '#C9A040', '#F07B3A', '#6A9A5F', '#F5EFE0', '#D4521A', '#C9A040', '#F07B3A']
 
   const tagline = useScramble('Principal Implementation Consultant', 1600, 700)
 
@@ -220,16 +227,53 @@ const Hero = () => {
 
       {/* ── Avatar ── */}
       <div className={styles.visual}>
-        <motion.div
-          className={styles.avatarRing}
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'backOut' }}
-        >
-          <div className={styles.avatar}>
-            <img src="/images/headshot.jpg" alt="Vuong Tran" className={styles.avatarImg} />
-          </div>
-        </motion.div>
+        <div style={{ position: 'relative', display: 'inline-flex' }}>
+          <motion.div
+            className={styles.avatarRing}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: 'backOut' }}
+            whileTap={{ scale: 1.08 }}
+            onClick={handleAvatarClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className={styles.avatar}>
+              <img src="/images/headshot.jpg" alt="Vuong Tran" className={styles.avatarImg} />
+            </div>
+          </motion.div>
+
+          {/* Burst particles */}
+          <AnimatePresence>
+            {burst && [...Array(8)].map((_, i) => {
+              const angle = (i * 45 * Math.PI) / 180
+              const dist = 110
+              return (
+                <motion.div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    background: BURST_COLORS[i],
+                    pointerEvents: 'none',
+                  }}
+                  initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                  animate={{
+                    x: Math.cos(angle) * dist,
+                    y: Math.sin(angle) * dist,
+                    opacity: 0,
+                    scale: 0.3,
+                  }}
+                  exit={{}}
+                  transition={{ duration: 0.65, ease: 'easeOut' }}
+                />
+              )
+            })}
+          </AnimatePresence>
+        </div>
       </div>
 
     </section>
