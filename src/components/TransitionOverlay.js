@@ -1,23 +1,49 @@
 import React, { useEffect, useRef } from 'react'
-import { motion, useAnimation, useMotionValue } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 
 const SECTION_ORDER = ['home', 'about', 'projects', 'contact']
 
-const LIQUID_COLOR = {
-  home:     '#1E1A14',
-  about:    '#1E1A14',
-  projects: '#D4521A',
-  contact:  '#3D6B35',
-}
+const LEAF_COLORS = [
+  '#D4521A', '#D4521A', '#D4521A',
+  '#F07B3A', '#F07B3A',
+  '#C9A040', '#C9A040',
+  '#3D6B35', '#6A9A5F',
+  '#1E1A14',
+  '#F5D4BF',
+]
+
+const LEAF_RADII = [
+  '49% 51% 51% 49% / 57% 57% 43% 43%',
+  '50% 0% 50% 0% / 50% 0% 50% 0%',
+  '0% 100% 0% 100% / 50% 50% 50% 50%',
+  '70% 30% 70% 30% / 30% 70% 30% 70%',
+  '40% 60% 60% 40% / 60% 40% 40% 60%',
+]
+
+// Deterministic pseudo-random — safe for SSR
+const s = (i, n) => ((i * 137.508 * n) % 1 + 1) % 1
+
+const LEAVES = Array.from({ length: 50 }, (_, i) => ({
+  id:     i,
+  left:   s(i, 1.2) * 90 + 5,
+  top:    s(i, 2.3) * 88 + 6,
+  size:   Math.floor(s(i, 3.1) * 70 + 55),
+  rot:    Math.floor(s(i, 4.7) * 90 - 45),
+  spin:   Math.floor(s(i, 5.9) * 300 + 120) * (s(i, 6.1) > 0.5 ? 1 : -1),
+  delay:  s(i, 7.3) * 0.28,
+  color:  LEAF_COLORS[Math.floor(s(i, 8.1) * LEAF_COLORS.length)],
+  radius: LEAF_RADII[Math.floor(s(i, 9.2) * LEAF_RADII.length)],
+}))
 
 const TransitionOverlay = () => {
-  const ctrl      = useAnimation()
-  const busy      = useRef(false)
-  const overlayEl = useRef(null)
-  const originY   = useMotionValue(0)
+  const leafCtrl = useAnimation()
+  const bgCtrl   = useAnimation()
+  const busy     = useRef(false)
 
   useEffect(() => {
-    ctrl.set({ scaleY: 0 })
+    // Start off-screen to the right
+    leafCtrl.set({ x: '110vw' })
+    bgCtrl.set({ opacity: 0 })
 
     const handler = async (e) => {
       if (busy.current) return
@@ -34,78 +60,100 @@ const TransitionOverlay = () => {
 
       const hscroll = document.getElementById('h-scroll')
 
-      // Set liquid colour for the destination section
-      if (overlayEl.current) {
-        overlayEl.current.style.background = LIQUID_COLOR[targetId] || '#1E1A14'
-      }
-
-      // Phase 1: pour in from the top (top anchor, grows downward, spring for splash)
-      originY.set(0)
-      await ctrl.start({
-        scaleY: 1,
-        transition: { type: 'spring', stiffness: 180, damping: 22 },
+      // Determine direction
+      const mid = hscroll.scrollLeft + window.innerWidth / 2
+      let currentId = 'home', minDist = Infinity
+      SECTION_ORDER.forEach(id => {
+        const el = document.getElementById(id)
+        if (!el) return
+        const dist = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid)
+        if (dist < minDist) { minDist = dist; currentId = id }
       })
+      const goingRight = SECTION_ORDER.indexOf(targetId) >= SECTION_ORDER.indexOf(currentId)
+      const enterFrom  = goingRight ? '110vw'  : '-110vw'
+      const exitTo     = goingRight ? '-110vw' : '110vw'
 
-      // Instant scroll while screen is covered
+      // Snap leaves to entry side (instant, off-screen so invisible)
+      await leafCtrl.start((i) => ({
+        x: enterFrom,
+        rotate: LEAVES[i].rot,
+        transition: { duration: 0 },
+      }))
+
+      // Phase 1: leaves sweep in while backdrop fades up
+      bgCtrl.start({ opacity: 0.88, transition: { duration: 0.3, ease: 'easeIn' } })
+      await leafCtrl.start((i) => ({
+        x: 0,
+        rotate: LEAVES[i].rot + LEAVES[i].spin * 0.5,
+        transition: {
+          duration: 0.45,
+          ease: [0.2, 0, 0.5, 1],
+          delay: LEAVES[i].delay,
+        },
+      }))
+
+      // Scroll while covered
       if (hscroll && target) {
         hscroll.style.scrollBehavior = 'auto'
         hscroll.scrollLeft = target.offsetLeft
         hscroll.style.scrollBehavior = ''
       }
 
-      // Phase 2: drain from the bottom (bottom anchor, level drops downward)
-      originY.set(1)
-      await ctrl.start({
-        scaleY: 0,
-        transition: { duration: 0.55, ease: [0.4, 0, 0.9, 1] },
-      })
+      // Phase 2: leaves sweep out while backdrop fades down
+      bgCtrl.start({ opacity: 0, transition: { duration: 0.35, ease: 'easeOut', delay: 0.08 } })
+      await leafCtrl.start((i) => ({
+        x: exitTo,
+        rotate: LEAVES[i].rot + LEAVES[i].spin,
+        transition: {
+          duration: 0.42,
+          ease: [0.4, 0, 0.8, 1],
+          delay: LEAVES[i].delay,
+        },
+      }))
 
       busy.current = false
     }
 
     window.addEventListener('section-navigate', handler)
     return () => window.removeEventListener('section-navigate', handler)
-  }, [ctrl, originY])
+  }, [leafCtrl, bgCtrl])
 
   return (
     <>
-      {/* Liquid-surface displacement filter */}
-      <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
-        <defs>
-          <filter id="liquid-edge" x="-5%" y="-5%" width="110%" height="110%">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.01 0.07"
-              numOctaves="3"
-              seed="6"
-              result="noise"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="38"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
-
+      {/* Dark backdrop fills any gaps between leaves */}
       <motion.div
-        ref={overlayEl}
-        animate={ctrl}
-        initial={{ scaleY: 0 }}
+        animate={bgCtrl}
+        initial={{ opacity: 0 }}
         style={{
           position: 'fixed',
           inset: 0,
           background: '#1E1A14',
-          filter: 'url(#liquid-edge)',
-          originY,
-          zIndex: 9000,
+          zIndex: 8999,
           pointerEvents: 'none',
-          willChange: 'transform',
         }}
       />
+
+      {/* Leaves */}
+      {LEAVES.map((leaf, i) => (
+        <motion.div
+          key={leaf.id}
+          custom={i}
+          animate={leafCtrl}
+          initial={{ x: '110vw', rotate: leaf.rot }}
+          style={{
+            position: 'fixed',
+            left:         `${leaf.left}%`,
+            top:          `${leaf.top}%`,
+            width:        leaf.size,
+            height:       leaf.size,
+            background:   leaf.color,
+            borderRadius: leaf.radius,
+            zIndex:       9000,
+            pointerEvents: 'none',
+            willChange:   'transform',
+          }}
+        />
+      ))}
     </>
   )
 }
