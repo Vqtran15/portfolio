@@ -120,7 +120,7 @@ const TransitionOverlay = () => {
                   key={i}
                   initial={{ opacity: 0, y: 36 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: phrase.dir * 160, transition: { duration: 0.3, ease: 'easeIn' } }}
+                  exit={{ opacity: 0, x: phrase.dir * 320, transition: { duration: 0.45, ease: 'easeIn' } }}
                   transition={{ delay: i * 0.08, duration: 0.4, ease: [0.25, 0, 0.5, 1] }}
                   style={{
                     display: 'inline-block',
