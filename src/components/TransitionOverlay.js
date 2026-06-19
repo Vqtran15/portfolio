@@ -23,11 +23,11 @@ const LEAF_RADII = [
 // Deterministic pseudo-random — safe for SSR
 const s = (i, n) => ((i * 137.508 * n) % 1 + 1) % 1
 
-const LEAVES = Array.from({ length: 50 }, (_, i) => ({
+const LEAVES = Array.from({ length: 80 }, (_, i) => ({
   id:     i,
-  left:   s(i, 1.2) * 90 + 5,
-  top:    s(i, 2.3) * 88 + 6,
-  size:   Math.floor(s(i, 3.1) * 70 + 55),
+  left:   s(i, 1.2) * 92 + 4,
+  top:    s(i, 2.3) * 90 + 5,
+  size:   Math.floor(s(i, 3.1) * 140 + 80),
   rot:    Math.floor(s(i, 4.7) * 90 - 45),
   spin:   Math.floor(s(i, 5.9) * 300 + 120) * (s(i, 6.1) > 0.5 ? 1 : -1),
   delay:  s(i, 7.3) * 0.28,
@@ -76,14 +76,16 @@ const TransitionOverlay = () => {
       // Snap leaves to entry side (instant, off-screen so invisible)
       await leafCtrl.start((i) => ({
         x: enterFrom,
+        y: 0,
         rotate: LEAVES[i].rot,
         transition: { duration: 0 },
       }))
 
-      // Phase 1: leaves sweep in while backdrop fades up
-      bgCtrl.start({ opacity: 0.88, transition: { duration: 0.3, ease: 'easeIn' } })
+      // Phase 1: leaves sweep in while backdrop fades up to fully opaque
+      bgCtrl.start({ opacity: 1, transition: { duration: 0.25, ease: 'easeIn' } })
       await leafCtrl.start((i) => ({
         x: 0,
+        y: (s(i, 11.3) * 80 - 40),
         rotate: LEAVES[i].rot + LEAVES[i].spin * 0.5,
         transition: {
           duration: 0.45,
@@ -100,9 +102,10 @@ const TransitionOverlay = () => {
       }
 
       // Phase 2: leaves sweep out while backdrop fades down
-      bgCtrl.start({ opacity: 0, transition: { duration: 0.35, ease: 'easeOut', delay: 0.08 } })
+      bgCtrl.start({ opacity: 0, transition: { duration: 0.3, ease: 'easeOut', delay: 0.1 } })
       await leafCtrl.start((i) => ({
         x: exitTo,
+        y: (s(i, 11.3) * 80 - 40) + (s(i, 12.7) * 60 - 30),
         rotate: LEAVES[i].rot + LEAVES[i].spin,
         transition: {
           duration: 0.42,
