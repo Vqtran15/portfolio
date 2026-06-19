@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import * as styles from './Navbar.module.css'
 
 const SECTIONS = ['home', 'about', 'projects', 'contact']
@@ -60,9 +61,26 @@ const Navbar = () => {
     <nav className={`${styles.nav} ${isLight ? styles.lightLinks : ''}`}>
       <a id="nav-logo" href="#home" className={styles.logo} onClick={e => { e.preventDefault(); scrollTo('home') }}>VT</a>
       <ul className={styles.links}>
-        <li><a id="nav-about" href="#about" onClick={e => { e.preventDefault(); scrollTo('about') }}>About</a></li>
-        <li><a id="nav-projects" href="#projects" onClick={e => { e.preventDefault(); scrollTo('projects') }}>Projects</a></li>
-        <li><a id="nav-contact" href="#contact" onClick={e => { e.preventDefault(); scrollTo('contact') }}>Contact</a></li>
+        {[['about', 'About'], ['projects', 'Projects'], ['contact', 'Contact']].map(([id, label]) => (
+          <li key={id} className={styles.linkItem}>
+            <a
+              id={`nav-${id}`}
+              href={`#${id}`}
+              className={section === id ? styles.activeLink : ''}
+              onClick={e => { e.preventDefault(); scrollTo(id) }}
+            >
+              {label}
+            </a>
+            {section === id && (
+              <motion.span
+                layoutId="nav-indicator"
+                className={styles.indicator}
+                style={{ background: isLight ? 'var(--cream)' : 'var(--orange)' }}
+                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+              />
+            )}
+          </li>
+        ))}
       </ul>
     </nav>
   )

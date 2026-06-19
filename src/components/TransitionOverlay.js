@@ -1,64 +1,32 @@
-import React, { useEffect, useRef } from 'react'
-import { motion, useAnimation } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
+import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 
 const SECTION_ORDER = ['home', 'about', 'projects', 'contact']
 
-const LEAF_COLORS = [
-  '#D4521A', '#D4521A', '#D4521A',
-  '#F07B3A', '#F07B3A',
-  '#C9A040', '#C9A040',
-  '#3D6B35', '#6A9A5F',
-  '#1E1A14',
-  '#F5D4BF',
-]
+const MESSAGES = {
+  home:     'Back to home base!',
+  about:    'Learn about me',
+  projects: 'Check out my projects',
+  contact:  'I would love to meet you!',
+}
 
-const LEAF_RADII = [
-  '49% 51% 51% 49% / 57% 57% 43% 43%',
-  '50% 0% 50% 0% / 50% 0% 50% 0%',
-  '0% 100% 0% 100% / 50% 50% 50% 50%',
-  '70% 30% 70% 30% / 30% 70% 30% 70%',
-  '40% 60% 60% 40% / 60% 40% 40% 60%',
-]
-
-// Deterministic pseudo-random — safe for SSR
-// Use golden-ratio-derived multiplier (1.618) for good fractional distribution
-const s = (i, n) => ((i * 137.508 * n) % 1 + 1) % 1
-
-// 8 cols × 10 rows grid with per-cell jitter — guarantees even spread
-const COLS = 8, ROWS = 10
-const CW = 100 / COLS, CH = 100 / ROWS
-
-const LEAVES = Array.from({ length: COLS * ROWS }, (_, i) => {
-  const col = i % COLS
-  const row = Math.floor(i / COLS)
-  const cx  = col * CW + CW / 2   // cell centre x %
-  const cy  = row * CH + CH / 2   // cell centre y %
-  return {
-    id:     i,
-    left:   Math.max(2, Math.min(98, cx + (s(i, 1.618) - 0.5) * CW * 0.75)),
-    top:    Math.max(2, Math.min(98, cy + (s(i, 2.718) - 0.5) * CH * 0.75)),
-    size:   Math.floor(s(i, 3.14)  * 140 + 80),
-    rot:    Math.floor(s(i, 4.669) * 90 - 45),
-    spin:   Math.floor(s(i, 5.77)  * 300 + 120) * (s(i, 6.28) > 0.5 ? 1 : -1),
-    delay:  s(i, 7.39) * 0.28,
-    color:  LEAF_COLORS[Math.floor(s(i, 8.44)  * LEAF_COLORS.length)],
-    radius: LEAF_RADII[Math.floor(s(i, 9.51)   * LEAF_RADII.length)],
-  }
-})
+const UNDERLINE_COLOR = {
+  home:     '#D4521A',
+  about:    '#3D6B35',
+  projects: '#D4521A',
+  contact:  '#3D6B35',
+}
 
 const TransitionOverlay = () => {
-  const leafCtrl = useAnimation()
-  const bgCtrl   = useAnimation()
-  const busy     = useRef(false)
+  const bgCtrl = useAnimation()
+  const busy   = useRef(false)
+  const [phrase, setPhrase] = useState(null)
 
   useEffect(() => {
-    // Start off-screen to the right
-    leafCtrl.set({ x: '110vw' })
     bgCtrl.set({ opacity: 0 })
 
     const handler = async (e) => {
       if (busy.current) return
-
       const { targetId } = e.detail
       const target = document.getElementById(targetId)
 
@@ -68,10 +36,9 @@ const TransitionOverlay = () => {
       }
 
       busy.current = true
-
       const hscroll = document.getElementById('h-scroll')
 
-      // Determine direction
+      // Determine navigation direction
       const mid = hscroll.scrollLeft + window.innerWidth / 2
       let currentId = 'home', minDist = Infinity
       SECTION_ORDER.forEach(id => {
@@ -80,61 +47,40 @@ const TransitionOverlay = () => {
         const dist = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid)
         if (dist < minDist) { minDist = dist; currentId = id }
       })
-      const goingRight = SECTION_ORDER.indexOf(targetId) >= SECTION_ORDER.indexOf(currentId)
-      const enterFrom  = goingRight ? '110vw'  : '-110vw'
-      const exitTo     = goingRight ? '-110vw' : '110vw'
+      const dir = SECTION_ORDER.indexOf(targetId) >= SECTION_ORDER.indexOf(currentId) ? 1 : -1
 
-      // Snap leaves to entry side (instant, off-screen so invisible)
-      await leafCtrl.start((i) => ({
-        x: enterFrom,
-        y: 0,
-        rotate: LEAVES[i].rot,
-        transition: { duration: 0 },
-      }))
+      // Show backdrop + phrase
+      setPhrase({ text: MESSAGES[targetId] || '', color: UNDERLINE_COLOR[targetId] || '#D4521A', dir })
+      bgCtrl.start({ opacity: 1, transition: { duration: 0.22, ease: 'easeIn' } })
 
-      // Phase 1: leaves sweep in while backdrop fades up to fully opaque
-      bgCtrl.start({ opacity: 1, transition: { duration: 0.25, ease: 'easeIn' } })
-      await leafCtrl.start((i) => ({
-        x: 0,
-        y: (s(i, 11.3) * 80 - 40),
-        rotate: LEAVES[i].rot + LEAVES[i].spin * 0.5,
-        transition: {
-          duration: 0.45,
-          ease: [0.2, 0, 0.5, 1],
-          delay: LEAVES[i].delay,
-        },
-      }))
+      // Wait for all words to reveal + brief hold before scrolling
+      // longest phrase: 6 words × 0.08s stagger + 0.4s duration = 0.88s → 950ms gives a beat of hold
+      await new Promise(r => setTimeout(r, 950))
 
-      // Scroll while covered
+      // Scroll while backdrop is opaque
       if (hscroll && target) {
         hscroll.style.scrollBehavior = 'auto'
         hscroll.scrollLeft = target.offsetLeft
         hscroll.style.scrollBehavior = ''
       }
 
-      // Phase 2: leaves sweep out while backdrop fades down
-      bgCtrl.start({ opacity: 0, transition: { duration: 0.3, ease: 'easeOut', delay: 0.1 } })
-      await leafCtrl.start((i) => ({
-        x: exitTo,
-        y: (s(i, 11.3) * 80 - 40) + (s(i, 12.7) * 60 - 30),
-        rotate: LEAVES[i].rot + LEAVES[i].spin,
-        transition: {
-          duration: 0.42,
-          ease: [0.4, 0, 0.8, 1],
-          delay: LEAVES[i].delay,
-        },
-      }))
+      // Short hold, then exit
+      await new Promise(r => setTimeout(r, 150))
+      setPhrase(null)
+      bgCtrl.start({ opacity: 0, transition: { duration: 0.35, ease: 'easeOut' } })
+
+      // Wait for exit animation to finish
+      await new Promise(r => setTimeout(r, 380))
 
       busy.current = false
     }
 
     window.addEventListener('section-navigate', handler)
     return () => window.removeEventListener('section-navigate', handler)
-  }, [leafCtrl, bgCtrl])
+  }, [bgCtrl])
 
   return (
     <>
-      {/* Dark backdrop fills any gaps between leaves */}
       <motion.div
         animate={bgCtrl}
         initial={{ opacity: 0 }}
@@ -147,27 +93,68 @@ const TransitionOverlay = () => {
         }}
       />
 
-      {/* Leaves */}
-      {LEAVES.map((leaf, i) => (
-        <motion.div
-          key={leaf.id}
-          custom={i}
-          animate={leafCtrl}
-          initial={{ x: '110vw', rotate: leaf.rot }}
-          style={{
-            position: 'fixed',
-            left:         `${leaf.left}%`,
-            top:          `${leaf.top}%`,
-            width:        leaf.size,
-            height:       leaf.size,
-            background:   leaf.color,
-            borderRadius: leaf.radius,
-            zIndex:       9000,
-            pointerEvents: 'none',
-            willChange:   'transform',
-          }}
-        />
-      ))}
+      <AnimatePresence>
+        {phrase && (
+          <motion.div
+            key={phrase.text}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 9000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0 2rem',
+              pointerEvents: 'none',
+            }}
+          >
+            <p style={{
+              margin: 0,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '0 0.32em',
+            }}>
+              {phrase.text.split(' ').map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 36 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: phrase.dir * 160, transition: { duration: 0.3, ease: 'easeIn' } }}
+                  transition={{ delay: i * 0.08, duration: 0.4, ease: [0.25, 0, 0.5, 1] }}
+                  style={{
+                    display: 'inline-block',
+                    position: 'relative',
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+                    fontWeight: 700,
+                    color: '#F5EFE0',
+                    lineHeight: 1.2,
+                    textShadow: '0 2px 20px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  {word}
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: i * 0.08 + 0.28, duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      position: 'absolute',
+                      bottom: -6,
+                      left: 0,
+                      right: 0,
+                      height: 3,
+                      borderRadius: 2,
+                      background: phrase.color,
+                      transformOrigin: 'left center',
+                    }}
+                  />
+                </motion.span>
+              ))}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

@@ -54,6 +54,19 @@
   gap: 2.5rem;
 }
 
+.linkItem {
+  position: relative;
+}
+
+.indicator {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 1px;
+}
+
 .links a {
   font-family: 'Raleway', sans-serif;
   font-weight: 600;
@@ -76,12 +89,17 @@
   transition: width 0.25s ease;
 }
 
-.links a:hover {
+.links a:hover,
+.links a.activeLink {
   color: var(--orange);
 }
 
 .links a:hover::after {
   width: 100%;
+}
+
+.lightLinks .links a.activeLink {
+  color: var(--cream);
 }
 
 @media (max-width: 768px) {
