@@ -5,9 +5,9 @@ const SECTION_ORDER = ['home', 'about', 'projects', 'contact']
 
 const MESSAGES = {
   home:     'Back to home base!',
-  about:    'Learn about me',
-  projects: 'Check out my projects',
-  contact:  'I would love to meet you!',
+  about:    'About me',
+  projects: 'My projects',
+  contact:  'Contact information',
 }
 
 const UNDERLINE_COLOR = {

@@ -69,6 +69,7 @@
   padding-bottom: 8rem;
   position: relative;
   z-index: 3;
+  min-width: 0;
 }
 
 .greeting {
@@ -108,14 +109,18 @@
 /* ── Scramble tagline ── */
 
 .tagline {
-  font-size: 1.1rem;
-  color: var(--warm-brown);
+  font-size: 1rem;
+  color: var(--cream);
   font-weight: 400;
   margin-bottom: 2.5rem;
-  max-width: 400px;
+  max-width: 440px;
   line-height: 1.65;
   font-family: 'Courier New', Courier, monospace;
   letter-spacing: 0.02em;
+  display: inline-block;
+  background: rgba(30, 26, 20, 0.68);
+  padding: 0.4em 0.65em;
+  border-radius: 3px;
 }
 
 .ctas {
@@ -172,6 +177,7 @@
   align-items: center;
   justify-content: center;
 }
+
 
 .avatarRing {
   width: 230px;

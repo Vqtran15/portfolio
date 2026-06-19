@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, AnimatePresence } from 'framer-motion'
 import * as styles from './Hero.module.css'
 import useScramble from '../hooks/useScramble'
@@ -56,6 +56,11 @@ const stars = [
 // Cycling greetings
 const GREETINGS = ['Hi there,', 'Hey friend,', 'Hello,']
 
+const POPUP_LINES = [
+  'Deploying enterprise solutions by day',
+  'Building digital products by night',
+]
+
 // ── Hero ───────────────────────────────────────────────────────
 const Hero = () => {
   const sunColor = useMotionValue('#C9A040')
@@ -76,15 +81,24 @@ const Hero = () => {
     return () => el.removeEventListener('scroll', onScroll)
   }, [sunColor])
 
+  const [nameHovered, setNameHovered] = useState(false)
+  const scrambledName = useScramble(nameHovered ? 'An implementation consultant' : 'Vuong Tran', 700, 0)
+
   const [burst, setBurst] = useState(false)
+  const [showTagline, setShowTagline] = useState(false)
+  const taglineTimerRef = useRef(null)
+
   const handleAvatarClick = () => {
     setBurst(true)
     setTimeout(() => setBurst(false), 700)
+    clearTimeout(taglineTimerRef.current)
+    setShowTagline(true)
+    taglineTimerRef.current = setTimeout(() => setShowTagline(false), 4000)
   }
 
-  const BURST_COLORS = ['#D4521A', '#C9A040', '#F07B3A', '#6A9A5F', '#F5EFE0', '#D4521A', '#C9A040', '#F07B3A']
+  useEffect(() => () => clearTimeout(taglineTimerRef.current), [])
 
-  const tagline = useScramble('Principal Implementation Consultant', 1600, 700)
+  const BURST_COLORS = ['#D4521A', '#C9A040', '#F07B3A', '#6A9A5F', '#F5EFE0', '#D4521A', '#C9A040', '#F07B3A']
 
   // Cycling greeting
   const [greetIdx, setGreetIdx] = useState(0)
@@ -204,21 +218,18 @@ const Hero = () => {
           <motion.h1
             className={styles.name}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.62, duration: 0.01 }}
+            animate={{ opacity: 1, scale: nameHovered ? 0.38 : 1 }}
+            transition={{
+              opacity: { delay: 0.62, duration: 0.01 },
+              scale: { duration: 0.35, ease: [0.25, 0, 0.5, 1] },
+            }}
+            onMouseEnter={() => setNameHovered(true)}
+            onMouseLeave={() => setNameHovered(false)}
+            style={{ cursor: 'default', transformOrigin: 'left center', whiteSpace: 'nowrap' }}
           >
-            Vuong Tran
+            {scrambledName}
           </motion.h1>
         </div>
-
-        <motion.p
-          className={styles.tagline}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.65 }}
-        >
-          {tagline}
-        </motion.p>
 
         <motion.div
           className={styles.ctas}
@@ -288,6 +299,38 @@ const Hero = () => {
               )
             })}
           </AnimatePresence>
+
+          {/* Click-to-reveal tagline */}
+          <div style={{ position: 'absolute', top: 'calc(100% + 1.25rem)', left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', width: 'max-content' }}>
+            <AnimatePresence>
+              {showTagline && (
+                <motion.div
+                  key="tagline-popup"
+                  exit={{ opacity: 0, y: 10, transition: { duration: 0.5, ease: 'easeIn' } }}
+                  style={{ background: 'rgba(30, 26, 20, 0.78)', padding: '0.55em 0.9em', borderRadius: '4px' }}
+                >
+                  {POPUP_LINES.map((line, li) => {
+                    const lineStartIdx = POPUP_LINES.slice(0, li).reduce((s, l) => s + l.split(' ').length, 0)
+                    return (
+                      <p key={li} style={{ margin: li === 0 ? '0 0 0.15em' : '0', textAlign: 'center', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '0 0.3em' }}>
+                        {line.split(' ').map((word, wi) => (
+                          <motion.span
+                            key={wi}
+                            initial={{ opacity: 0, y: 14 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: (lineStartIdx + wi) * 0.07, duration: 0.35, ease: [0.25, 0, 0.5, 1] }}
+                            style={{ display: 'inline-block', fontFamily: "'Courier New', Courier, monospace", fontSize: '0.95rem', fontWeight: 400, color: '#F5EFE0', letterSpacing: '0.02em', lineHeight: 1.65 }}
+                          >
+                            {word}
+                          </motion.span>
+                        ))}
+                      </p>
+                    )
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 

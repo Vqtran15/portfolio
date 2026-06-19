@@ -75,9 +75,9 @@
 }
 
 @keyframes arrowGlow {
-  0%   { box-shadow: 0 0 0 0 rgba(212, 82, 26, 0.6); }
-  65%  { box-shadow: 0 0 0 12px rgba(212, 82, 26, 0); }
-  100% { box-shadow: 0 0 0 12px rgba(212, 82, 26, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(212, 82, 26, 0.85); }
+  65%  { box-shadow: 0 0 0 22px rgba(212, 82, 26, 0); }
+  100% { box-shadow: 0 0 0 22px rgba(212, 82, 26, 0); }
 }
 
 @media (max-width: 768px) {
