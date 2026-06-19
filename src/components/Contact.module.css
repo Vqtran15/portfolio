@@ -100,9 +100,12 @@
 @media (max-width: 768px) {
   .section {
     min-width: 100%;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
     max-height: none;
-    overflow-y: visible;
-    overflow-x: hidden;
+    overflow: visible;
     scroll-snap-align: none;
   }
 }

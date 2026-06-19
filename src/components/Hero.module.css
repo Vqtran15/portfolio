@@ -260,7 +260,8 @@
     scroll-snap-align: none;
     grid-template-columns: 1fr;
     padding: 6rem 1.5rem 3rem;
-    min-height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
     gap: 3rem;
   }
 

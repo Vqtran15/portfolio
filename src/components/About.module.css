@@ -124,6 +124,12 @@
   transform: translateY(-2px);
 }
 
+/* ── Tech list (mobile only) ── */
+
+.techList {
+  display: none;
+}
+
 /* ── Mobile ── */
 
 @media (max-width: 768px) {
@@ -133,6 +139,7 @@
     max-width: 100%;
     height: auto;
     min-height: 100vh;
+    min-height: 100svh;
     overflow: visible;
     scroll-snap-align: none;
     padding: 6rem 1.5rem 4rem;
@@ -152,5 +159,45 @@
     background: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  .techList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+  .techGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .techGroupLabel {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  .techPills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .techPill {
+    font-family: 'Karla', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--cream);
+    padding: 0.3rem 0.7rem;
+    background: rgba(245, 239, 224, 0.08);
+    border: 1px solid rgba(245, 239, 224, 0.15);
+    border-radius: 2px;
   }
 }

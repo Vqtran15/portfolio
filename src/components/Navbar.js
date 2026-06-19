@@ -1,32 +1,57 @@
 import React, { useState, useEffect } from 'react'
 import * as styles from './Navbar.module.css'
 
+const SECTIONS = ['home', 'about', 'projects', 'contact']
 const DARK_SECTIONS = new Set(['about', 'contact'])
+
+const isMobile = () => window.innerWidth < 768
 
 const Navbar = () => {
   const [section, setSection] = useState('home')
 
   useEffect(() => {
-    const el = document.getElementById('h-scroll')
-    if (!el) return
-    const SECTIONS = ['home', 'about', 'projects', 'contact']
-    const handleScroll = () => {
-      const mid = el.scrollLeft + window.innerWidth / 2
-      let closest = 'home', minDist = Infinity
-      SECTIONS.forEach(id => {
-        const sec = document.getElementById(id)
-        if (!sec) return
-        const dist = Math.abs(sec.offsetLeft + sec.offsetWidth / 2 - mid)
-        if (dist < minDist) { minDist = dist; closest = id }
-      })
-      setSection(closest)
+    const updateSection = () => {
+      if (isMobile()) {
+        const mid = window.scrollY + window.innerHeight / 2
+        let closest = 'home', minDist = Infinity
+        SECTIONS.forEach(id => {
+          const el = document.getElementById(id)
+          if (!el) return
+          const dist = Math.abs(el.offsetTop + el.offsetHeight / 2 - mid)
+          if (dist < minDist) { minDist = dist; closest = id }
+        })
+        setSection(closest)
+      } else {
+        const hscroll = document.getElementById('h-scroll')
+        if (!hscroll) return
+        const mid = hscroll.scrollLeft + window.innerWidth / 2
+        let closest = 'home', minDist = Infinity
+        SECTIONS.forEach(id => {
+          const el = document.getElementById(id)
+          if (!el) return
+          const dist = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid)
+          if (dist < minDist) { minDist = dist; closest = id }
+        })
+        setSection(closest)
+      }
     }
-    el.addEventListener('scroll', handleScroll, { passive: true })
-    return () => el.removeEventListener('scroll', handleScroll)
+
+    const hscroll = document.getElementById('h-scroll')
+    window.addEventListener('scroll', updateSection, { passive: true })
+    hscroll?.addEventListener('scroll', updateSection, { passive: true })
+    updateSection()
+    return () => {
+      window.removeEventListener('scroll', updateSection)
+      hscroll?.removeEventListener('scroll', updateSection)
+    }
   }, [])
 
   const scrollTo = (id) => {
-    window.dispatchEvent(new CustomEvent('section-navigate', { detail: { targetId: id } }))
+    if (isMobile()) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      window.dispatchEvent(new CustomEvent('section-navigate', { detail: { targetId: id } }))
+    }
   }
 
   const isLight = DARK_SECTIONS.has(section)

@@ -289,10 +289,12 @@
 @media (max-width: 768px) {
   .section {
     min-width: 100%;
+    width: 100%;
+    height: auto;
     max-height: none;
-    overflow-y: visible;
-    overflow-x: hidden;
+    overflow: visible;
     scroll-snap-align: none;
+    padding-bottom: 4rem;
   }
 }
 

@@ -85,10 +85,24 @@ const About = () => (
       </motion.a>
     </div>
 
-    {/* Orbiting tech badges — rendered after bio so they sit on top */}
+    {/* Orbiting tech badges — desktop only */}
     <div className={styles.orbitContainer}>
       {allBadges.map((skill, i) => (
         <OrbitBadge key={skill.name} skill={skill} index={i} total={allBadges.length} />
+      ))}
+    </div>
+
+    {/* Tech list — mobile only */}
+    <div className={styles.techList}>
+      {categoryOrder.map(cat => (
+        <div key={cat} className={styles.techGroup}>
+          <span className={styles.techGroupLabel}>{cat}</span>
+          <div className={styles.techPills}>
+            {allBadges.filter(b => b.category === cat).map(skill => (
+              <span key={skill.name} className={styles.techPill}>{skill.name}</span>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
 

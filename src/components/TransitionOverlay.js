@@ -1528,11 +1528,18 @@ const TransitionOverlay = () => {
 
     const handler = async (e) => {
       if (busy.current) return
-      busy.current = true
 
       const { targetId } = e.detail
-      const hscroll = document.getElementById('h-scroll')
       const target  = document.getElementById(targetId)
+
+      if (window.innerWidth < 768) {
+        target?.scrollIntoView({ behavior: 'smooth' })
+        return
+      }
+
+      busy.current = true
+
+      const hscroll = document.getElementById('h-scroll')
 
       const palette = PALETTES[targetId] || PALETTES.home
       blobRefs.current.forEach((el, i) => {
