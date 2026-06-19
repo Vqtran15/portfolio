@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './Navbar'
-import BackToTop from './BackToTop'
 import CursorTrailer from './CursorTrailer'
-import SectionCursor from './SectionCursor'
+import SectionNav from './SectionNav'
+import TransitionOverlay from './TransitionOverlay'
 
-const Layout = ({ children }) => (
-  <div style={{ minHeight: '100vh' }}>
-    <CursorTrailer />
-    <SectionCursor />
-    <Navbar />
-    <main>{children}</main>
-    <BackToTop />
-  </div>
-)
+const Layout = ({ children }) => {
+  useEffect(() => {
+    const el = document.getElementById('h-scroll')
+    if (!el) return
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+      e.preventDefault()
+      el.scrollLeft += e.deltaY
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
+
+  return (
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
+      <CursorTrailer />
+      <TransitionOverlay />
+      <SectionNav />
+      <Navbar />
+      <main id="h-scroll">{children}</main>
+    </div>
+  )
+}
 
 export default Layout

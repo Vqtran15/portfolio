@@ -11,9 +11,21 @@
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.scrolled {
+.atHome {
   background: var(--cream);
   box-shadow: 0 2px 20px rgba(30, 26, 20, 0.08);
+}
+
+.lightLinks .links a {
+  color: rgba(245, 239, 224, 0.8);
+}
+
+.lightLinks .links a:hover {
+  color: var(--cream);
+}
+
+.lightLinks .links a::after {
+  background: var(--cream);
 }
 
 .logo {

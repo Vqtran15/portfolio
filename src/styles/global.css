@@ -21,8 +21,37 @@
   --sand: #DDD0B0;
 }
 
-html {
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+#h-scroll {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 100vh;
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+#h-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow: auto;
+    height: auto;
+  }
+  #h-scroll {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    scroll-snap-type: none;
+  }
 }
 
 @keyframes treeSway {

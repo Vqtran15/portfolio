@@ -1,4 +1,9 @@
 .hero {
+  width: 100vw;
+  min-width: 100vw;
+  max-width: 100vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -251,6 +256,8 @@
 
 @media (max-width: 768px) {
   .hero {
+    min-width: 100%;
+    scroll-snap-align: none;
     grid-template-columns: 1fr;
     padding: 6rem 1.5rem 3rem;
     min-height: auto;

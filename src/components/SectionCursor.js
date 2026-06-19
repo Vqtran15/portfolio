@@ -21,21 +21,20 @@ const SectionCursor = () => {
     const sections = Object.keys(SECTION_ICONS)
 
     const getActive = () => {
-      const mid = window.innerHeight / 2
+      const mid = window.innerWidth / 2
       let closest = null
       let closestDist = Infinity
       sections.forEach(id => {
         const el = document.getElementById(id)
         if (!el) return
         const rect = el.getBoundingClientRect()
-        const dist = Math.abs(rect.top + rect.height / 2 - mid)
+        const dist = Math.abs(rect.left + rect.width / 2 - mid)
         if (dist < closestDist) { closestDist = dist; closest = id }
       })
-      // Only set icon if that section is actually visible
       const activeEl = closest ? document.getElementById(closest) : null
       if (activeEl) {
         const rect = activeEl.getBoundingClientRect()
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
+        if (rect.left < window.innerWidth && rect.right > 0) {
           setIcon(SECTION_ICONS[closest] || null)
         } else {
           setIcon(null)
@@ -43,9 +42,10 @@ const SectionCursor = () => {
       }
     }
 
-    window.addEventListener('scroll', getActive, { passive: true })
+    const container = document.getElementById('h-scroll')
+    if (container) container.addEventListener('scroll', getActive, { passive: true })
     getActive()
-    return () => window.removeEventListener('scroll', getActive)
+    return () => { if (container) container.removeEventListener('scroll', getActive) }
   }, [])
 
   return (

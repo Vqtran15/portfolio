@@ -1,54 +1,119 @@
 .section {
-  scroll-margin-top: 80px;
-  padding: 7rem 4rem;
+  width: 100vw;
+  min-width: 100vw;
+  max-width: 100vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  height: 100vh;
+  overflow: hidden;
   background: var(--dark);
   position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: start;
+/* ── Orbit ── */
+
+.orbitContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.orbitItem {
+  position: absolute;
+  pointer-events: auto;
+}
+
+.orbitBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(245, 239, 224, 0.07);
+  border: 1.5px solid rgba(245, 239, 224, 0.14);
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: default;
+}
+
+.orbitBadge:hover {
+  background: rgba(212, 82, 26, 0.2);
+  border-color: var(--orange);
+}
+
+.badgeName {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.badgeCat {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ── Bio ── */
+
+.bio {
   position: relative;
   z-index: 2;
+  max-width: 380px;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(30, 26, 20, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 4px;
 }
 
 .label {
   display: block;
   font-family: 'Raleway', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--orange);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 900;
   color: var(--cream);
-  margin-bottom: 1.75rem;
+  margin-bottom: 0.75rem;
 }
 
-.bio {
-  font-size: 1.05rem;
+.body {
+  font-size: 0.83rem;
   color: var(--sand);
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
+  line-height: 1.65;
+  margin-bottom: 0.6rem;
 }
 
 .cta {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.875rem 2rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 1.4rem;
   background: var(--orange);
   color: var(--cream);
   font-family: 'Raleway', sans-serif;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: background 0.2s ease, transform 0.2s ease;
@@ -59,248 +124,33 @@
   transform: translateY(-2px);
 }
 
-/* ── AFSP Badge ── */
+/* ── Mobile ── */
 
-.afsoBadge {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  padding: 0.875rem 1.25rem;
-  background: rgba(201, 160, 64, 0.08);
-  border: 1.5px solid rgba(201, 160, 64, 0.25);
-  border-radius: 2px;
-}
-
-.afsoBadgeIcon {
-  font-size: 1.4rem;
-  color: var(--mustard);
-  flex-shrink: 0;
-}
-
-.afsoBadgeTitle {
-  display: block;
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--mustard);
-  letter-spacing: 0.04em;
-}
-
-.afsoBadgeSub {
-  display: block;
-  font-family: 'Karla', sans-serif;
-  font-size: 0.78rem;
-  color: var(--sand);
-  margin-top: 0.15rem;
-}
-
-/* ── Skills ── */
-
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-}
-
-.badgeCloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  justify-content: center;
-}
-
-/* Each badge is a wrapper for the orbit CSS animation */
-.skillBadge {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 1rem 1.5rem;
-  background: rgba(245, 239, 224, 0.06);
-  border: 1.5px solid rgba(245, 239, 224, 0.15);
-  border-radius: 2px;
-  cursor: default;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.skillBadge:hover {
-  background: rgba(212, 82, 26, 0.18);
-  border-color: var(--orange);
-}
-
-.orbitPaused {
-  animation-play-state: paused;
-}
-
-.badgeName {
-  font-family: 'Karla', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--cream);
-  white-space: nowrap;
-}
-
-.badgeCat {
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--orange);
-}
-
-/* ── Orbital animations — 6 scrambled paths ── */
-
-@keyframes orbit0 {
-  0%   { transform: translate( 6px,  0px); }
-  25%  { transform: translate( 0px, -6px); }
-  50%  { transform: translate(-6px,  0px); }
-  75%  { transform: translate( 0px,  6px); }
-  100% { transform: translate( 6px,  0px); }
-}
-@keyframes orbit1 {
-  0%   { transform: translate(  0px, -9px); }
-  25%  { transform: translate(  9px,  0px); }
-  50%  { transform: translate(  0px,  9px); }
-  75%  { transform: translate( -9px,  0px); }
-  100% { transform: translate(  0px, -9px); }
-}
-@keyframes orbit2 {
-  0%   { transform: translate(-5px,  5px); }
-  25%  { transform: translate( 5px,  5px); }
-  50%  { transform: translate( 5px, -5px); }
-  75%  { transform: translate(-5px, -5px); }
-  100% { transform: translate(-5px,  5px); }
-}
-@keyframes orbit3 {
-  0%   { transform: translate( 8px, -4px); }
-  25%  { transform: translate( 4px,  8px); }
-  50%  { transform: translate(-8px,  4px); }
-  75%  { transform: translate(-4px, -8px); }
-  100% { transform: translate( 8px, -4px); }
-}
-@keyframes orbit4 {
-  0%   { transform: translate(-7px, -3px); }
-  25%  { transform: translate( 3px, -7px); }
-  50%  { transform: translate( 7px,  3px); }
-  75%  { transform: translate(-3px,  7px); }
-  100% { transform: translate(-7px, -3px); }
-}
-@keyframes orbit5 {
-  0%   { transform: translate( 4px,  7px); }
-  25%  { transform: translate(-7px,  4px); }
-  50%  { transform: translate(-4px, -7px); }
-  75%  { transform: translate( 7px, -4px); }
-  100% { transform: translate( 4px,  7px); }
-}
-
-.orbit0 { animation: orbit0 5.0s linear infinite; }
-.orbit1 { animation: orbit1 6.5s linear infinite; }
-.orbit2 { animation: orbit2 4.5s linear infinite; }
-.orbit3 { animation: orbit3 7.0s linear infinite; }
-.orbit4 { animation: orbit4 5.5s linear infinite; }
-.orbit5 { animation: orbit5 4.0s linear infinite; }
-
-/* ── Timeline ── */
-
-.timeline {
-  width: 100%;
-  margin-top: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.timelineItem {
-  display: grid;
-  grid-template-columns: 3rem 1.25rem 1fr;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0;
-  border-left: none;
-  position: relative;
-}
-
-.timelineItem::before {
-  content: '';
-  position: absolute;
-  left: calc(3rem + 0.75rem + 0.6rem);
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgba(245, 239, 224, 0.1);
-}
-
-.timelineItem:last-child::before {
-  display: none;
-}
-
-.timelineYear {
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--orange);
-  letter-spacing: 0.06em;
-  text-align: right;
-}
-
-.timelineDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--orange);
-  border: 2px solid var(--dark);
-  box-shadow: 0 0 0 2px var(--orange);
-  flex-shrink: 0;
-  justify-self: center;
-}
-
-.timelineLabel {
-  font-family: 'Karla', sans-serif;
-  font-size: 0.88rem;
-  color: var(--sand);
-  line-height: 1.4;
-}
-
-/* ── Decorative ring ── */
-
-.decorRing {
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  border-radius: 50%;
-  border: 55px solid rgba(61, 107, 53, 0.1);
-  right: -160px;
-  bottom: -160px;
-  z-index: 1;
-}
-
-/* ── Responsive ── */
-
-@media (max-width: 900px) {
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
+@media (max-width: 768px) {
   .section {
-    padding: 5rem 1.5rem;
-  }
-
-  .right {
-    flex-direction: column;
     width: 100%;
-    align-items: stretch;
-  }
-
-  .badgeCloud {
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    scroll-snap-align: none;
+    padding: 6rem 1.5rem 4rem;
+    flex-direction: column;
     justify-content: flex-start;
+    align-items: flex-start;
   }
 
-  .timeline {
-    margin-top: 1.5rem;
+  .orbitContainer {
+    display: none;
+  }
+
+  .bio {
+    text-align: left;
+    max-width: 100%;
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

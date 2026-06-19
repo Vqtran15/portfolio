@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, useMotionValue, AnimatePresence } from 'framer-motion'
 import * as styles from './Hero.module.css'
 import useScramble from '../hooks/useScramble'
 
@@ -58,8 +58,23 @@ const GREETINGS = ['Hi there,', 'Hey friend,', 'Hello,']
 
 // ── Hero ───────────────────────────────────────────────────────
 const Hero = () => {
-  const { scrollY } = useScroll()
-  const sunColor = useTransform(scrollY, [0, 400, 800], ['#C9A040', '#D4521A', '#8B2500'])
+  const sunColor = useMotionValue('#C9A040')
+  useEffect(() => {
+    const el = document.getElementById('h-scroll')
+    if (!el) return
+    const palette = [[201,160,64],[212,82,26],[139,37,0]]
+    const lerp = (a, b, t) => Math.round(a + (b - a) * t)
+    const onScroll = () => {
+      const max = el.scrollWidth - el.clientWidth
+      if (!max) return
+      const t = Math.min(el.scrollLeft / max, 1) * 2
+      const i = Math.min(Math.floor(t), 1)
+      const f = t - i
+      sunColor.set(`rgb(${lerp(palette[i][0],palette[i+1][0],f)},${lerp(palette[i][1],palette[i+1][1],f)},${lerp(palette[i][2],palette[i+1][2],f)})`)
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [sunColor])
 
   const [burst, setBurst] = useState(false)
   const handleAvatarClick = () => {
