@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import CursorTrailer from './CursorTrailer'
 import SectionNav from './SectionNav'
 import TransitionOverlay from './TransitionOverlay'
+import * as styles from './Layout.module.css'
 
 const Layout = ({ children }) => {
   useEffect(() => {
@@ -18,7 +19,7 @@ const Layout = ({ children }) => {
   }, [])
 
   return (
-    <div style={{ height: '100vh', overflow: 'hidden' }}>
+    <div className={styles.wrapper}>
       <CursorTrailer />
       <TransitionOverlay />
       <SectionNav />

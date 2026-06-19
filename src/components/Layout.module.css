@@ -1,0 +1,11 @@
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    height: auto;
+    overflow: visible;
+  }
+}
