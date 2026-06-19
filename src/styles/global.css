@@ -47,8 +47,7 @@ html, body {
   }
   #h-scroll {
     display: block;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: visible;
     height: auto;
     scroll-snap-type: none;
   }
