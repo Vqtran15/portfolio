@@ -1541,6 +1541,9 @@ const TransitionOverlay = () => {
 
       const hscroll = document.getElementById('h-scroll')
 
+      // Reset y from previous scrape before splatting in (hidden at scale 0)
+      ctrl.set({ y: 0 })
+
       const palette = PALETTES[targetId] || PALETTES.home
       blobRefs.current.forEach((el, i) => {
         if (el) el.style.background = palette[i]
@@ -1558,12 +1561,17 @@ const TransitionOverlay = () => {
         hscroll.style.scrollBehavior = ''
       }
 
+      // Scrape off left-to-right: blobs slide down staggered by x position
       await ctrl.start((i) => ({
-        scale: 0,
-        rotate: BLOBS[i].rot,
-        transition: { duration: 0.06, ease: 'easeIn', delay: Math.floor(i / 6) * 0.005 },
+        y: '110vh',
+        transition: {
+          duration: 0.22,
+          ease: [0.4, 0, 0.9, 0.6],
+          delay: (BLOBS[i].x / 100) * 0.2,
+        },
       }))
 
+      ctrl.set({ scale: 0, y: 0 })
       busy.current = false
     }
 
