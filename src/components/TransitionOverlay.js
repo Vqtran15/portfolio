@@ -21,19 +21,30 @@ const LEAF_RADII = [
 ]
 
 // Deterministic pseudo-random — safe for SSR
+// Use golden-ratio-derived multiplier (1.618) for good fractional distribution
 const s = (i, n) => ((i * 137.508 * n) % 1 + 1) % 1
 
-const LEAVES = Array.from({ length: 80 }, (_, i) => ({
-  id:     i,
-  left:   s(i, 1.2) * 92 + 4,
-  top:    s(i, 2.3) * 90 + 5,
-  size:   Math.floor(s(i, 3.1) * 140 + 80),
-  rot:    Math.floor(s(i, 4.7) * 90 - 45),
-  spin:   Math.floor(s(i, 5.9) * 300 + 120) * (s(i, 6.1) > 0.5 ? 1 : -1),
-  delay:  s(i, 7.3) * 0.28,
-  color:  LEAF_COLORS[Math.floor(s(i, 8.1) * LEAF_COLORS.length)],
-  radius: LEAF_RADII[Math.floor(s(i, 9.2) * LEAF_RADII.length)],
-}))
+// 8 cols × 10 rows grid with per-cell jitter — guarantees even spread
+const COLS = 8, ROWS = 10
+const CW = 100 / COLS, CH = 100 / ROWS
+
+const LEAVES = Array.from({ length: COLS * ROWS }, (_, i) => {
+  const col = i % COLS
+  const row = Math.floor(i / COLS)
+  const cx  = col * CW + CW / 2   // cell centre x %
+  const cy  = row * CH + CH / 2   // cell centre y %
+  return {
+    id:     i,
+    left:   Math.max(2, Math.min(98, cx + (s(i, 1.618) - 0.5) * CW * 0.75)),
+    top:    Math.max(2, Math.min(98, cy + (s(i, 2.718) - 0.5) * CH * 0.75)),
+    size:   Math.floor(s(i, 3.14)  * 140 + 80),
+    rot:    Math.floor(s(i, 4.669) * 90 - 45),
+    spin:   Math.floor(s(i, 5.77)  * 300 + 120) * (s(i, 6.28) > 0.5 ? 1 : -1),
+    delay:  s(i, 7.39) * 0.28,
+    color:  LEAF_COLORS[Math.floor(s(i, 8.44)  * LEAF_COLORS.length)],
+    radius: LEAF_RADII[Math.floor(s(i, 9.51)   * LEAF_RADII.length)],
+  }
+})
 
 const TransitionOverlay = () => {
   const leafCtrl = useAnimation()
