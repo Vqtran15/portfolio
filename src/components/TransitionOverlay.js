@@ -4,7 +4,7 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 const SECTION_ORDER = ['home', 'about', 'projects', 'contact']
 
 const MESSAGES = {
-  home:     'Back to home base!',
+  home:     'Welcome back',
   about:    'About me',
   projects: 'My projects',
   contact:  'Contact information',
