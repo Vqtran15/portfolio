@@ -347,6 +347,155 @@
   border-color: var(--cream);
 }
 
+/* ── Game prompt ── */
+
+.comingSoonGamePrompt {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(245, 239, 224, 0.55);
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* ── Catch the Bean game ── */
+
+.game {
+  width: 100%;
+}
+
+.gameArea {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border: 1.5px solid rgba(245, 239, 224, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(10, 8, 5, 0.55);
+  user-select: none;
+}
+
+.gameScreen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+.gameMsg {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(245, 239, 224, 0.55);
+  text-align: center;
+  max-width: 240px;
+}
+
+.gameResult {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-align: center;
+}
+
+.gameResult strong {
+  color: var(--orange);
+}
+
+.gameBest {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 224, 0.35);
+  text-align: center;
+}
+
+.gameBtn {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--orange);
+  border: none;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease;
+}
+
+.gameBtn:hover {
+  background: var(--orange-light);
+  transform: translateY(-1px);
+}
+
+.gameHUD {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0.8rem;
+  background: rgba(10, 8, 5, 0.7);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  z-index: 2;
+}
+
+.gameTimer {
+  color: var(--orange);
+}
+
+.beanBtn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  animation: beanPop 0.15s ease-out forwards;
+  transition: transform 0.08s ease;
+  z-index: 1;
+}
+
+.beanBtn:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+.beanBtn:active {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+@keyframes beanPop {
+  from { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+}
+
+.beanCaught {
+  animation: mugPop 0.32s ease-out forwards !important;
+  font-size: 1.6rem;
+  pointer-events: none;
+}
+
+@keyframes mugPop {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+  40%  { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+}
+
 /* ── Mobile ── */
 
 @media (max-width: 768px) {

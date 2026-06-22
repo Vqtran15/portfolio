@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
@@ -119,6 +119,111 @@ const ProjectSection = ({ project, index }) => {
   )
 }
 
+const BeanIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <g transform="rotate(-20, 14, 14)">
+      <ellipse cx="14" cy="14" rx="7.5" ry="12" fill="#8B5A2B" />
+      <ellipse cx="14" cy="14" rx="5.5" ry="10" fill="#6B3A1A" />
+      <path d="M14 4.5 Q10 14 14 23.5" stroke="#3A1A08" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+    </g>
+  </svg>
+)
+
+const CatchTheBeanGame = () => {
+  const [phase, setPhase] = useState('idle')   // idle | playing | done
+  const [score, setScore] = useState(0)
+  const [best, setBest] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(30)
+  const [beans, setBeans] = useState([])
+  const scoreRef = useRef(0)
+
+  useEffect(() => { scoreRef.current = score }, [score])
+
+  // Countdown
+  useEffect(() => {
+    if (phase !== 'playing') return
+    if (timeLeft <= 0) {
+      setPhase('done')
+      setBest(b => Math.max(b, scoreRef.current))
+      setBeans([])
+      return
+    }
+    const t = setTimeout(() => setTimeLeft(s => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [phase, timeLeft])
+
+  // Spawn beans
+  useEffect(() => {
+    if (phase !== 'playing') return
+    const spawn = () => {
+      const lifetime = Math.max(650, 1500 - scoreRef.current * 35)
+      const id = Date.now() + Math.random()
+      setBeans(b => [...b, { id, x: 5 + Math.random() * 82, y: 5 + Math.random() * 72, caught: false }])
+      setTimeout(() => setBeans(b => b.filter(bean => bean.id !== id)), lifetime)
+    }
+    spawn()
+    const interval = setInterval(spawn, 850)
+    return () => clearInterval(interval)
+  }, [phase])
+
+  const catchBean = (id) => {
+    // flip to mug icon briefly, then remove
+    setBeans(b => b.map(bean => bean.id === id ? { ...bean, caught: true } : bean))
+    setScore(s => s + 1)
+    setTimeout(() => setBeans(b => b.filter(bean => bean.id !== id)), 320)
+  }
+
+  const start = () => {
+    setScore(0)
+    scoreRef.current = 0
+    setTimeLeft(30)
+    setBeans([])
+    setPhase('playing')
+  }
+
+  return (
+    <div className={styles.game}>
+      <div className={styles.gameArea}>
+        {phase === 'idle' && (
+          <div className={styles.gameScreen}>
+            <p className={styles.gameMsg}>Grab the beans before they disappear!</p>
+            <button className={styles.gameBtn} onClick={start}>Start</button>
+          </div>
+        )}
+
+        {phase === 'done' && (
+          <div className={styles.gameScreen}>
+            <p className={styles.gameResult}>
+              You caught <strong>{score}</strong> bean{score !== 1 ? 's' : ''}
+            </p>
+            {best > 0 && <p className={styles.gameBest}>Best: {best}</p>}
+            <button className={styles.gameBtn} onClick={start}>Play Again</button>
+          </div>
+        )}
+
+        {phase === 'playing' && (
+          <>
+            <div className={styles.gameHUD}>
+              <span>☕ {score}</span>
+              <span className={styles.gameTimer}>{timeLeft}s</span>
+            </div>
+            {beans.map(bean => (
+              <button
+                key={bean.id}
+                className={`${styles.beanBtn} ${bean.caught ? styles.beanCaught : ''}`}
+                style={{ left: `${bean.x}%`, top: `${bean.y}%` }}
+                onClick={() => !bean.caught && catchBean(bean.id)}
+              >
+                {bean.caught ? '☕' : <BeanIcon />}
+              </button>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
 const ComingSoonSection = () => (
   <section id="coming-soon" className={styles.comingSoonSection}>
     <div className={styles.comingSoonInner}>
@@ -157,19 +262,13 @@ const ComingSoonSection = () => (
         More projects brewing
       </motion.h2>
 
-      <motion.p className={styles.comingSoonSub} {...fadeUp(0.2)}>
-        Always building something new. Follow along on GitHub.
+      <motion.p className={styles.comingSoonGamePrompt} {...fadeUp(0.2)}>
+        In the meantime, grab beans below to make some coffee!
       </motion.p>
 
-      <motion.a
-        href="https://github.com/Vqtran15"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.comingSoonLink}
-        {...fadeUp(0.3)}
-      >
-        <GithubIcon /> github.com/Vqtran15
-      </motion.a>
+      <motion.div style={{ width: '100%' }} {...fadeUp(0.3)}>
+        <CatchTheBeanGame />
+      </motion.div>
     </div>
   </section>
 )
