@@ -157,18 +157,24 @@
   .bio {
     text-align: left;
     max-width: 100%;
-    padding: 0;
-    background: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    padding: 1.5rem;
+    background: rgba(30, 26, 20, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 4px;
   }
 
   .techList {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    margin-top: 2rem;
+    margin-top: 1.25rem;
     width: 100%;
+    padding: 1.5rem;
+    background: rgba(30, 26, 20, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 4px;
   }
 
   .techGroup {

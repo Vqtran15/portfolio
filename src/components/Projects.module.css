@@ -275,31 +275,51 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+    /* switch to block so card height isn't circular with flex stretch */
+    display: block;
     height: auto;
-    min-height: 100svh;
     overflow: visible;
     scroll-snap-align: none;
-    padding: 5.5rem 1.25rem 2rem;
-    align-items: flex-start;
+    padding: 2rem 1rem;
   }
 
   .card {
+    width: 100%;
     max-height: none;
+    height: auto;
     grid-template-columns: 1fr;
-    grid-template-rows: 220px auto;
+    grid-template-rows: auto auto;
   }
 
+  /* video panel on top, text below */
   .right {
     order: -1;
+    min-height: 220px;
+    overflow: hidden;
+  }
+
+  /* compact monitor on mobile — hide the stand */
+  .monitorWrap {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .monitorNeck,
+  .monitorBase {
+    display: none;
   }
 
   .left {
-    padding: 1.75rem 1.5rem 1.5rem;
+    padding: 1.5rem 1.25rem;
     border-right: none;
-    border-top: 1px solid rgba(245, 239, 224, 0.06);
+    border-top: 1px solid rgba(245, 239, 224, 0.08);
   }
 
   .desc {
     max-width: 100%;
+  }
+
+  .cooking {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
   }
 }

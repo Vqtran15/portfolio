@@ -11,6 +11,7 @@ const Layout = ({ children }) => {
     const el = document.getElementById('h-scroll')
     if (!el) return
     const onWheel = (e) => {
+      if (window.innerWidth < 768) return
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
       e.preventDefault()
       el.scrollLeft += e.deltaY
