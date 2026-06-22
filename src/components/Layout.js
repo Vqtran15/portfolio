@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
     const el = document.getElementById('h-scroll')
     if (!el) return
 
-    const SECTIONS = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'contact']
+    const SECTIONS = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'coming-soon', 'contact']
     let locked = false
     let rafId = null
 

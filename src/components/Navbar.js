@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Navbar.module.css'
 
-const SECTIONS = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'contact']
+const SECTIONS = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'coming-soon', 'contact']
 const DARK_SECTIONS = new Set(['about', 'contact'])
 
 const isMobile = () => window.innerWidth < 768
@@ -63,7 +63,7 @@ const Navbar = () => {
       <ul className={styles.links}>
         {[['about', 'About'], ['project-0', 'Projects'], ['contact', 'Contact']].map(([id, label]) => {
           const isActive = id === 'project-0'
-            ? section.startsWith('project-')
+            ? section.startsWith('project-') || section === 'coming-soon'
             : section === id
           return (
             <li key={id} className={styles.linkItem}>

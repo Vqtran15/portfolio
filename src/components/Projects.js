@@ -28,7 +28,6 @@ const ProjectSection = ({ project, index }) => {
   const num = String(index + 1).padStart(2, '0')
   const total = String(projects.length).padStart(2, '0')
   const slug = project.title.toLowerCase().replace(/\s+/g, '-')
-  const isLast = index === projects.length - 1
 
   return (
     <section id={`project-${index}`} className={`${styles.section} ${accentClass}`}>
@@ -77,22 +76,6 @@ const ProjectSection = ({ project, index }) => {
             </a>
           )}
         </motion.div>
-
-        {isLast && (
-          <motion.div className={styles.cooking} {...fadeUp(0.36)}>
-            <svg viewBox="0 0 64 64" fill="none" className={styles.pot} aria-hidden="true">
-              <ellipse className={styles.steam1} cx="22" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-              <ellipse className={styles.steam2} cx="32" cy="15" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-              <ellipse className={styles.steam3} cx="42" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-              <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
-              <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
-              <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
-              <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
-              <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
-            </svg>
-            <span className={styles.cookingText}>More projects cooking</span>
-          </motion.div>
-        )}
       </div>
 
       {/* Right — monitor mockup */}
@@ -136,11 +119,55 @@ const ProjectSection = ({ project, index }) => {
   )
 }
 
+const ComingSoonSection = () => (
+  <section id="coming-soon" className={styles.comingSoonSection}>
+    <div className={styles.comingSoonInner}>
+      <motion.div
+        className={styles.comingSoonPot}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+      >
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <ellipse className={styles.steam1} cx="22" cy="14" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
+          <ellipse className={styles.steam2} cx="32" cy="10" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
+          <ellipse className={styles.steam3} cx="42" cy="14" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
+          <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
+          <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
+          <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
+          <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+          <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+        </svg>
+      </motion.div>
+
+      <motion.h2 className={styles.comingSoonTitle} {...fadeUp(0.1)}>
+        More projects cooking
+      </motion.h2>
+
+      <motion.p className={styles.comingSoonSub} {...fadeUp(0.2)}>
+        Always building something new. Follow along on GitHub.
+      </motion.p>
+
+      <motion.a
+        href="https://github.com/Vqtran15"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.comingSoonLink}
+        {...fadeUp(0.3)}
+      >
+        <GithubIcon /> github.com/Vqtran15
+      </motion.a>
+    </div>
+  </section>
+)
+
 const Projects = () => (
   <>
     {projects.map((project, i) => (
       <ProjectSection key={i} project={project} index={i} />
     ))}
+    <ComingSoonSection />
   </>
 )
 

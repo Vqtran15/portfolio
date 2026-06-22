@@ -268,6 +268,81 @@
   border-top: none;
 }
 
+/* ── Coming Soon section ── */
+
+.comingSoonSection {
+  width: 100vw;
+  min-width: 100vw;
+  max-width: 100vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.comingSoonInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 0;
+}
+
+.comingSoonPot {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 2rem;
+}
+
+.comingSoonPot svg {
+  width: 100%;
+  height: 100%;
+}
+
+.comingSoonTitle {
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+.comingSoonSub {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(245, 239, 224, 0.62);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 340px;
+}
+
+.comingSoonLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  padding: 0.6rem 1.4rem;
+  border: 1.5px solid rgba(245, 239, 224, 0.3);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.comingSoonLink:hover {
+  background: rgba(245, 239, 224, 0.1);
+  border-color: var(--cream);
+}
+
 /* ── Mobile ── */
 
 @media (max-width: 768px) {
@@ -321,5 +396,23 @@
   .cooking {
     margin-top: 1.25rem;
     padding-top: 1rem;
+  }
+
+  .comingSoonSection {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    display: block;
+    height: auto;
+    min-height: 60vh;
+    overflow: visible;
+    scroll-snap-align: none;
+    padding: 4rem 1.5rem;
+  }
+
+  .comingSoonPot {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
   }
 }

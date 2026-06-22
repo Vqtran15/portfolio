@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const SECTION_ICONS = {
-  about:       '✏️',
-  'project-0': '💻',
-  'project-1': '✅',
-  'project-2': '👥',
-  'project-3': '☕',
-  contact:     '✉️',
+  about:         '✏️',
+  'project-0':   '💻',
+  'project-1':   '✅',
+  'project-2':   '👥',
+  'project-3':   '☕',
+  'coming-soon': '🍳',
+  contact:       '✉️',
 }
 
 const SectionCursor = () => {
