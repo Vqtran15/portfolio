@@ -60,33 +60,6 @@ const Navbar = () => {
   return (
     <nav className={`${styles.nav} ${isLight ? styles.lightLinks : ''}`}>
       <a id="nav-logo" href="#home" className={styles.logo} onClick={e => { e.preventDefault(); scrollTo('home') }}>VT</a>
-      <ul className={styles.links}>
-        {[['about', 'About'], ['project-0', 'Projects'], ['contact', 'Contact']].map(([id, label]) => {
-          const isActive = id === 'project-0'
-            ? section.startsWith('project-') || section === 'coming-soon'
-            : section === id
-          return (
-            <li key={id} className={styles.linkItem}>
-              <a
-                id={`nav-${id}`}
-                href={`#${id}`}
-                className={isActive ? styles.activeLink : ''}
-                onClick={e => { e.preventDefault(); scrollTo(id) }}
-              >
-                {label}
-              </a>
-              {isActive && (
-                <motion.span
-                  layoutId="nav-indicator"
-                  className={styles.indicator}
-                  style={{ background: isLight ? 'var(--cream)' : 'var(--orange)' }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                />
-              )}
-            </li>
-          )
-        })}
-      </ul>
     </nav>
   )
 }
