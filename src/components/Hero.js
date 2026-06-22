@@ -122,7 +122,7 @@ const Hero = () => {
             style={{ cursor: 'pointer' }}
           >
             <div className={styles.avatar}>
-              <img src="/images/headshot.jpg" alt="Vuong Tran" className={styles.avatarImg} />
+              <img src="/images/headshot-2026.png" alt="Vuong Tran" className={styles.avatarImg} />
             </div>
           </motion.div>
 
