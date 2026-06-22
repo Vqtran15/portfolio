@@ -96,22 +96,24 @@ const About = () => (
       <motion.span className={styles.label} {...fadeUp(0)}>Who I Am</motion.span>
       <motion.h2 className={styles.title} {...fadeUp(0.1)}>About Me</motion.h2>
       <motion.p className={styles.body} {...fadeUp(0.2)}>
-        My name is Vuong and I'm a Principal Implementation Consultant at Contentsquare, leading
-        the implementation function across websites and mobile apps. However, my passion for
-        building goes beyond my day job. My technical journey started back in 2020 when I taught
-        myself HTML, CSS, JavaScript, React, and Python. You'll find some of those old projects
-        in my Github. Fast forward to 2026 — I'm leveraging those foundational skills to build
-        applications alongside Claude.
+        My name is Vuong, and I'm a Principal Implementation Consultant at Contentsquare, where
+        I lead implementation strategies across web and mobile platforms.
       </motion.p>
       <motion.p className={styles.body} {...fadeUp(0.3)}>
-        For me, designing and building products with a seamless user experience is where the real
-        fun is. Thank you for visiting my portfolio!
+        However, my passion for building goes beyond my day job. In 2020, I taught myself HTML,
+        CSS, JavaScript, React, and Python to understand the web from the ground up. Fast forward
+        to today — I'm leveraging that foundational engineering mindset to build full-stack
+        applications alongside AI-agentic tools like Claude.
+      </motion.p>
+      <motion.p className={styles.body} {...fadeUp(0.35)}>
+        I have the most fun building apps that solve real world problems with a seamless user
+        experience. Thanks for stopping by!
       </motion.p>
       <motion.a
         id="about-cta-get-in-touch"
         href="#contact"
         className={styles.cta}
-        {...fadeUp(0.4)}
+        {...fadeUp(0.45)}
         onClick={e => {
           e.preventDefault()
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
