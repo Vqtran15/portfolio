@@ -7,7 +7,7 @@ const SECTION_ICONS = {
   'project-1':   '✅',
   'project-2':   '👥',
   'project-3':   '☕',
-  'coming-soon': '🍳',
+  'coming-soon': '🫖',
   contact:       '✉️',
 }
 

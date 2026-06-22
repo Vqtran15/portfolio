@@ -129,20 +129,32 @@ const ComingSoonSection = () => (
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
       >
-        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <ellipse className={styles.steam1} cx="22" cy="14" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
-          <ellipse className={styles.steam2} cx="32" cy="10" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
-          <ellipse className={styles.steam3} cx="42" cy="14" rx="3.5" ry="6" fill="#C9A040" opacity="0.7" />
-          <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
-          <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
-          <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
-          <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
-          <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+        <svg viewBox="0 0 80 90" fill="none" overflow="visible" aria-hidden="true">
+          {/* Steam */}
+          <ellipse className={styles.steam1} cx="26" cy="18" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
+          <ellipse className={styles.steam2} cx="40" cy="14" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
+          <ellipse className={styles.steam3} cx="54" cy="18" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
+          {/* Cup rim */}
+          <rect x="9" y="27" width="54" height="5" rx="2.5" fill="#E8D5B5" />
+          {/* Coffee surface */}
+          <ellipse cx="36" cy="29" rx="25" ry="5" fill="#2C1A0A" />
+          {/* Coffee sheen */}
+          <ellipse cx="30" cy="27" rx="8" ry="2.5" fill="#4A2E1A" opacity="0.6" />
+          {/* Cup body */}
+          <path d="M11 32 L13 70 Q13 75 18 75 L54 75 Q59 75 59 70 L61 32 Z" fill="#D4B896" />
+          {/* Cup body shadow */}
+          <path d="M52 32 L54 70 Q54 75 54 75 L54 75 Q59 75 59 70 L61 32 Z" fill="#C0A07A" />
+          {/* Handle */}
+          <path d="M61 41 Q75 41 75 53 Q75 65 61 63" stroke="#D4B896" strokeWidth="9" strokeLinecap="round" fill="none" />
+          <path d="M61 41 Q72 41 72 53 Q72 63 61 61" stroke="#C0A07A" strokeWidth="4" strokeLinecap="round" fill="none" />
+          {/* Saucer */}
+          <ellipse cx="36" cy="79" rx="36" ry="5.5" fill="#B89060" />
+          <ellipse cx="36" cy="77" rx="36" ry="5.5" fill="#D4B896" />
         </svg>
       </motion.div>
 
       <motion.h2 className={styles.comingSoonTitle} {...fadeUp(0.1)}>
-        More projects cooking
+        More projects brewing
       </motion.h2>
 
       <motion.p className={styles.comingSoonSub} {...fadeUp(0.2)}>

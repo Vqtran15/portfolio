@@ -10,7 +10,7 @@ const MESSAGES = {
   'project-1':   'Daily Task Categorizer',
   'project-2':   'Community Group App',
   'project-3':   'Coffee Logger',
-  'coming-soon': 'More projects cooking',
+  'coming-soon': 'More projects brewing',
   contact:       'Contact information',
 }
 
