@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion, useMotionValue, useAnimationFrame } from 'framer-motion'
+import { motion, useMotionValue, useAnimationFrame, animate } from 'framer-motion'
 import * as styles from './About.module.css'
 import { projects, techCategoryMap } from '../data/projects'
 
@@ -27,28 +27,56 @@ const RADIUS_Y_BOTTOM = 305
 const SPEED = 0.16 // radians per second
 
 const OrbitBadge = ({ skill, index, total }) => {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
+  const orbitX = useMotionValue(0)
+  const orbitY = useMotionValue(0)
+  const launchX = useMotionValue(0)
+  const launchY = useMotionValue(0)
+
   const startAngle = (index / total) * Math.PI * 2 - Math.PI / 2
 
   useAnimationFrame((time) => {
     const angle = startAngle + (time / 1000) * SPEED
     const c = Math.cos(angle)
     const s = Math.sin(angle)
-    // superellipse (n=4): bulges outward at 45° diagonals so bio card corners are cleared
-    // harmonic wobble adds gentle irregularity so it doesn't look like a perfect shape
     const wobble = 1 + 0.07 * Math.sin(3 * angle)
     const radiusY = s > 0 ? RADIUS_Y_BOTTOM : RADIUS_Y_TOP
-    x.set(Math.sign(c) * Math.pow(Math.abs(c), 0.5) * RADIUS_X * wobble)
-    y.set(Math.sign(s) * Math.pow(Math.abs(s), 0.5) * radiusY * wobble)
+    orbitX.set(Math.sign(c) * Math.pow(Math.abs(c), 0.5) * RADIUS_X * wobble)
+    orbitY.set(Math.sign(s) * Math.pow(Math.abs(s), 0.5) * radiusY * wobble)
   })
 
+  const handleClick = () => {
+    const cx = orbitX.get()
+    const cy = orbitY.get()
+    const dist = Math.sqrt(cx * cx + cy * cy)
+    if (dist === 0) return
+
+    const rx = cx / dist
+    const ry = cy / dist
+    // blend 20% radial + 80% tangential so badges at top/bottom shoot sideways
+    // rather than into the section's overflow:hidden boundary
+    const mx = 0.2 * rx + 0.8 * (-ry)
+    const my = 0.2 * ry + 0.8 * rx
+    const mag = Math.sqrt(mx * mx + my * my)
+    const LAUNCH = 160
+
+    animate(launchX, (mx / mag) * LAUNCH, { duration: 0.2, ease: 'easeOut' })
+    animate(launchY, (my / mag) * LAUNCH, { duration: 0.2, ease: 'easeOut' })
+
+    setTimeout(() => {
+      animate(launchX, 0, { duration: 0.45, ease: [0.34, 1.56, 0.64, 1] })
+      animate(launchY, 0, { duration: 0.45, ease: [0.34, 1.56, 0.64, 1] })
+    }, 200)
+  }
+
   return (
-    <motion.div className={styles.orbitItem} style={{ x, y }}>
-      <div className={styles.orbitBadge}>
-        <span className={styles.badgeName}>{skill.name}</span>
-        <span className={styles.badgeCat}>{skill.category}</span>
-      </div>
+    // outer div drives orbit position; inner drives launch offset independently
+    <motion.div className={styles.orbitItem} style={{ x: orbitX, y: orbitY }}>
+      <motion.div style={{ x: launchX, y: launchY }} onClick={handleClick}>
+        <div className={styles.orbitBadge}>
+          <span className={styles.badgeName}>{skill.name}</span>
+          <span className={styles.badgeCat}>{skill.category}</span>
+        </div>
+      </motion.div>
     </motion.div>
   )
 }

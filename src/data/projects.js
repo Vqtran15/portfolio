@@ -7,7 +7,7 @@ export const projects = [
     screenshot: '/images/portfolio.png',
   },
   {
-    title: 'To-Do List',
+    title: 'Daily Task Categorizer',
     description: "My Apple Notes to-do list had grown into an unmanageable wall of text with no structure. This app solves that with categorized lists, starred priorities, and user-level task saving — all in a mobile-friendly PWA you can bookmark on your homescreen.",
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/todo-list',
@@ -23,7 +23,7 @@ export const projects = [
     screenshot: '/images/community-group.png',
   },
   {
-    title: 'Coffee Log',
+    title: 'Coffee Logger',
     description: "Tracking brews in Apple Notes got unwieldy fast — long, unstructured, and impossible to compare. This app solves it with a clean UI for logging brew method, grind size, ratio, and tasting notes, with ratings so you can always replicate your best cup. Used daily ☕",
     tech: ['React', 'Vite', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/coffee-log',

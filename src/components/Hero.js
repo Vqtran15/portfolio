@@ -64,7 +64,11 @@ const Hero = () => {
           {GREETINGS[greetIdx]} I'm
         </motion.p>
 
-        <div className={styles.nameWrapper}>
+        <div
+          className={styles.nameWrapper}
+          onMouseEnter={() => setNameHovered(true)}
+          onMouseLeave={() => setNameHovered(false)}
+        >
           <motion.div
             className={styles.revealBlock}
             initial={{ x: '-100%' }}
@@ -79,8 +83,6 @@ const Hero = () => {
               opacity: { delay: 0.62, duration: 0.01 },
               scale: { duration: 0.35, ease: [0.25, 0, 0.5, 1] },
             }}
-            onMouseEnter={() => setNameHovered(true)}
-            onMouseLeave={() => setNameHovered(false)}
             style={{ cursor: 'default', transformOrigin: 'left center', whiteSpace: 'nowrap' }}
           >
             {scrambledName}

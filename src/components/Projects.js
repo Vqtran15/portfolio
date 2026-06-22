@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
@@ -27,38 +27,55 @@ const ExternalIcon = () => (
 
 const FlipCard = ({ project, colorClass, index }) => {
   const [flipped, setFlipped] = useState(false)
+  const [shadowFlipped, setShadowFlipped] = useState(false)
+  const timerRef = useRef(null)
   const slug = project.title.toLowerCase().replace(/\s+/g, '-')
+
+  const [isFlipping, setIsFlipping] = useState(false)
+
+  const handleFlip = () => {
+    const next = !flipped
+    setFlipped(next)
+    setIsFlipping(true)
+    setShadowFlipped(false)
+    clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => {
+      setIsFlipping(false)
+      setShadowFlipped(next)
+    }, 580)
+  }
+
+  const wrapperClass = [
+    styles.flipWrapper,
+    isFlipping ? styles.wrapperFlipping : shadowFlipped ? styles.wrapperFlipped : '',
+  ].join(' ')
 
   return (
     <motion.div
-      className={styles.flipWrapper}
+      className={wrapperClass}
       variants={cardVariants}
-      onClick={() => setFlipped(f => !f)}
+      onClick={handleFlip}
     >
       <div className={`${styles.card} ${colorClass} ${flipped ? styles.cardFlipped : ''}`}>
 
-        {/* Front — screenshot */}
+        {/* Front — bold header + screenshot */}
         <div className={styles.cardFront}>
-          {project.screenshot ? (
-            <>
-              <img
-                src={project.screenshot}
-                alt={`${project.title} screenshot`}
-                className={styles.screenshotImg}
-              />
-              <div className={styles.frontOverlay}>
-                <span className={styles.frontTitle}>{project.title}</span>
-                <span className={styles.frontHint}>
-                  <span className={styles.hintClick}>Click to learn more</span>
-                  <span className={styles.hintTap}>Tap to learn more</span>
-                </span>
-              </div>
-            </>
-          ) : (
-            <div className={styles.frontNoImage}>
-              <span className={styles.frontTitle}>{project.title}</span>
-            </div>
+          <div className={styles.cardHeader}>
+            <span className={styles.cardHeaderTitle}>{project.title}</span>
+          </div>
+          {project.screenshot && (
+            <img
+              src={project.screenshot}
+              alt={`${project.title} screenshot`}
+              className={styles.screenshotImg}
+            />
           )}
+          <div className={styles.frontOverlay}>
+            <span className={styles.frontHint}>
+              <span className={styles.hintClick}>Click to flip</span>
+              <span className={styles.hintTap}>Tap to flip</span>
+            </span>
+          </div>
         </div>
 
         {/* Back — details */}

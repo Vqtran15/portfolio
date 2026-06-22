@@ -9,6 +9,13 @@
   justify-content: space-between;
   padding: 1.5rem 4rem;
   transition: background 0.3s ease, box-shadow 0.3s ease;
+  /* transparent nav area passes clicks through to content below */
+  pointer-events: none;
+}
+
+.logo,
+.links a {
+  pointer-events: auto;
 }
 
 .atHome {
