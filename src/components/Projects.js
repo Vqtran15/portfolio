@@ -1,17 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.11 } },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-}
 
 const GithubIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -25,149 +15,133 @@ const ExternalIcon = () => (
   </svg>
 )
 
-const FlipCard = ({ project, colorClass, index }) => {
-  const [flipped, setFlipped] = useState(false)
-  const [shadowFlipped, setShadowFlipped] = useState(false)
-  const timerRef = useRef(null)
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.3 },
+  transition: { duration: 0.5, delay, ease: 'easeOut' },
+})
+
+const ProjectSection = ({ project, index }) => {
+  const isOrange = index % 2 === 0
+  const accentClass = isOrange ? styles.accentOrange : styles.accentGreen
+  const num = String(index + 1).padStart(2, '0')
+  const total = String(projects.length).padStart(2, '0')
   const slug = project.title.toLowerCase().replace(/\s+/g, '-')
-
-  const [isFlipping, setIsFlipping] = useState(false)
-
-  const handleFlip = () => {
-    const next = !flipped
-    setFlipped(next)
-    setIsFlipping(true)
-    setShadowFlipped(false)
-    clearTimeout(timerRef.current)
-    timerRef.current = setTimeout(() => {
-      setIsFlipping(false)
-      setShadowFlipped(next)
-    }, 580)
-  }
-
-  const wrapperClass = [
-    styles.flipWrapper,
-    isFlipping ? styles.wrapperFlipping : shadowFlipped ? styles.wrapperFlipped : '',
-  ].join(' ')
+  const isLast = index === projects.length - 1
 
   return (
-    <motion.div
-      className={wrapperClass}
-      variants={cardVariants}
-      onClick={handleFlip}
-    >
-      <div className={`${styles.card} ${colorClass} ${flipped ? styles.cardFlipped : ''}`}>
+    <section id={`project-${index}`} className={`${styles.section} ${accentClass}`}>
+    <div className={styles.card}>
 
-        {/* Front — bold header + screenshot */}
-        <div className={styles.cardFront}>
-          <div className={styles.cardHeader}>
-            <span className={styles.cardHeaderTitle}>{project.title}</span>
-          </div>
-          {project.screenshot && (
-            <img
-              src={project.screenshot}
-              alt={`${project.title} screenshot`}
-              className={styles.screenshotImg}
-            />
-          )}
-          <div className={styles.frontOverlay}>
-            <span className={styles.frontHint}>
-              <span className={styles.hintClick}>Click to flip</span>
-              <span className={styles.hintTap}>Tap to flip</span>
-            </span>
-          </div>
-        </div>
+      {/* Left — text */}
+      <div className={styles.left}>
+        <motion.div className={styles.counter} {...fadeUp(0)}>
+          <span className={styles.counterNum}>{num}</span>
+          <span className={styles.counterTotal}> / {total}</span>
+        </motion.div>
 
-        {/* Back — details */}
-        <div className={styles.cardBack}>
-          <h3 className={styles.backTitle}>{project.title}</h3>
-          <p className={styles.backDesc}>{project.description}</p>
-          <div className={styles.backTech}>
-            {project.tech.map((t, j) => (
-              <span key={j} className={styles.backPill}>{t}</span>
-            ))}
-          </div>
-          <div className={styles.backLinks}>
+        <motion.h2 className={styles.title} {...fadeUp(0.08)}>
+          {project.title}
+        </motion.h2>
+
+        <motion.p className={styles.desc} {...fadeUp(0.16)}>
+          {project.description}
+        </motion.p>
+
+        <motion.div className={styles.tech} {...fadeUp(0.22)}>
+          {project.tech.map(t => (
+            <span key={t} className={styles.pill}>{t}</span>
+          ))}
+        </motion.div>
+
+        <motion.div className={styles.links} {...fadeUp(0.28)}>
+          <a
+            id={`project-${slug}-github`}
+            href={project.github}
+            className={styles.linkBtn}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GithubIcon /> GitHub
+          </a>
+          {project.live && (
             <a
-              id={`project-${slug}-github`}
-              href={project.github}
-              className={styles.linkBtn}
+              id={`project-${slug}-live-site`}
+              href={project.live}
+              className={`${styles.linkBtn} ${styles.linkBtnPrimary}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={e => e.stopPropagation()}
             >
-              <GithubIcon /> GitHub
+              <ExternalIcon /> Live Site
             </a>
-            {project.live && (
-              <a
-                id={`project-${slug}-live-site`}
-                href={project.live}
-                className={`${styles.linkBtn} ${styles.linkBtnPrimary}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-              >
-                <ExternalIcon /> Live Site
-              </a>
-            )}
-          </div>
-        </div>
+          )}
+        </motion.div>
 
+        {isLast && (
+          <motion.div className={styles.cooking} {...fadeUp(0.36)}>
+            <svg viewBox="0 0 64 64" fill="none" className={styles.pot} aria-hidden="true">
+              <ellipse className={styles.steam1} cx="22" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+              <ellipse className={styles.steam2} cx="32" cy="15" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+              <ellipse className={styles.steam3} cx="42" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
+              <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
+              <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
+              <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
+              <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+              <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
+            </svg>
+            <span className={styles.cookingText}>More projects cooking</span>
+          </motion.div>
+        )}
       </div>
-    </motion.div>
+
+      {/* Right — monitor mockup */}
+      <div className={styles.right}>
+        <motion.div
+          className={styles.monitorWrap}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <div className={styles.monitorBezel}>
+            <div className={styles.monitorCam} />
+            <div className={styles.monitorScreen}>
+              {project.video ? (
+                <video
+                  className={styles.monitorMedia}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                >
+                  <source src={project.video} type="video/mp4" />
+                </video>
+              ) : project.screenshot ? (
+                <img
+                  src={project.screenshot}
+                  alt={`${project.title} screenshot`}
+                  className={styles.monitorMedia}
+                />
+              ) : null}
+            </div>
+          </div>
+          <div className={styles.monitorNeck} />
+          <div className={styles.monitorBase} />
+        </motion.div>
+      </div>
+
+    </div>
+    </section>
   )
 }
 
 const Projects = () => (
-  <section id="projects" className={styles.section}>
-    <div className={styles.header}>
-      <motion.span
-        className={styles.label}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        What I've Built
-      </motion.span>
-      <motion.h2
-        className={styles.title}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        Projects
-      </motion.h2>
-    </div>
-
-    <motion.div
-      className={styles.grid}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      {projects.map((project, i) => {
-        const colorClass = i % 2 === 0 ? styles.cardOrange : styles.cardGreen
-        return <FlipCard key={i} project={project} colorClass={colorClass} index={i} />
-      })}
-    </motion.div>
-
-    <div className={styles.cookingFooter}>
-      <svg className={styles.pot} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <ellipse className={styles.steam1} cx="22" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-        <ellipse className={styles.steam2} cx="32" cy="15" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-        <ellipse className={styles.steam3} cx="42" cy="18" rx="3" ry="5" fill="#C9A040" opacity="0.6" />
-        <rect x="16" y="27" width="32" height="5" rx="2.5" fill="#4A3728" />
-        <rect x="28" y="23" width="8" height="5" rx="2" fill="#4A3728" />
-        <path d="M14 32 Q12 50 32 52 Q52 50 50 32 Z" fill="#3D6B35" />
-        <rect x="8" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
-        <rect x="49" y="32" width="7" height="5" rx="2.5" fill="#4A3728" />
-      </svg>
-      <span className={styles.cookingText}>More projects cooking</span>
-    </div>
-  </section>
+  <>
+    {projects.map((project, i) => (
+      <ProjectSection key={i} project={project} index={i} />
+    ))}
+  </>
 )
 
 export default Projects

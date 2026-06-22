@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as styles from './SectionNav.module.css'
 
-const SECTIONS = ['home', 'about', 'projects', 'contact']
+const SECTIONS = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'contact']
 
 const SectionNav = () => {
   const [current, setCurrent] = useState(0)

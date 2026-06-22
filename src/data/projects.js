@@ -5,6 +5,7 @@ export const projects = [
     tech: ['React', 'Gatsby', 'GSAP', 'Google Tag Manager', 'Google Analytics'],
     github: 'https://github.com/Vqtran15/portfolio',
     screenshot: '/images/portfolio.png',
+    video: '/videos/Portfolio_Demo.mp4',
   },
   {
     title: 'Daily Task Categorizer',
@@ -13,6 +14,7 @@ export const projects = [
     github: 'https://github.com/Vqtran15/todo-list',
     live: 'https://todo-list-vuong-tran.vercel.app',
     screenshot: '/images/to-do-list.png',
+    video: '/videos/to-do-demo.mp4',
   },
   {
     title: 'Community Group App',
@@ -21,6 +23,7 @@ export const projects = [
     github: 'https://github.com/Vqtran15/community-group',
     live: 'https://bridgetown-community-group.vercel.app',
     screenshot: '/images/community-group.png',
+    video: '/videos/community-group-demo.mp4',
   },
   {
     title: 'Coffee Logger',
@@ -29,6 +32,7 @@ export const projects = [
     github: 'https://github.com/Vqtran15/coffee-log',
     live: 'https://coffee-log-pro.vercel.app/',
     screenshot: '/images/coffee-log.png',
+    video: '/videos/coffee-log.mp4',
   },
 ]
 

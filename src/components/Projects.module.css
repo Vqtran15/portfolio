@@ -1,3 +1,5 @@
+/* ── Project Section — transparent, shows parallax background ── */
+
 .section {
   width: 100vw;
   min-width: 100vw;
@@ -6,240 +8,118 @@
   scroll-snap-align: start;
   height: 100vh;
   overflow: hidden;
-  padding: 5.5rem 3.5rem 3.5rem;
-  background: rgba(20, 18, 14, 0.88);
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  margin-bottom: 1.5rem;
-  flex-shrink: 0;
-}
-
-.label {
-  display: block;
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 0.5rem;
-}
-
-.title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 900;
-  color: var(--cream);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  flex: 1;
-  min-height: 0;
-}
-
-/* ── Flip card ── */
-
-.flipWrapper {
-  perspective: 1000px;
-  height: 100%;
-  border-radius: 0;
-  box-shadow: 5px 5px 0 rgba(30, 26, 20, 0.82);
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-.flipWrapper:hover {
-  box-shadow: 8px 8px 0 rgba(30, 26, 20, 0.9);
-  transform: translate(-3px, -3px);
-}
-
-/* JS sets this class ~550ms after click, just as the card lands */
-.wrapperFlipped {
-  box-shadow: -5px 5px 0 rgba(30, 26, 20, 0.82);
-}
-
-.wrapperFlipped:hover {
-  box-shadow: -8px 8px 0 rgba(30, 26, 20, 0.9);
-  transform: translate(3px, -3px);
-}
-
-/* shadow fades out at flip start, reappears on correct side at flip end */
-.wrapperFlipping,
-.wrapperFlipping:hover {
-  box-shadow: 0 0 0 rgba(30, 26, 20, 0);
-  transition: box-shadow 0.12s ease, transform 0.15s ease;
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  will-change: transform;
-}
-
-.cardFlipped {
-  transform: rotateY(180deg);
-}
-
-.cardFront,
-.cardBack {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden;
-  border-radius: 0;
-}
-
-/* ── Front face — header + screenshot ── */
-
-.cardFront {
-  background: var(--dark);
-  display: flex;
-  flex-direction: column;
-}
-
-.cardHeader {
-  flex-shrink: 0;
-  padding: 0.6rem 1rem;
-  border-bottom: 2px solid rgba(30, 26, 20, 0.25);
-}
-
-.cardOrange .cardHeader { background: var(--orange); }
-.cardGreen  .cardHeader { background: var(--green); }
-
-.cardHeaderTitle {
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cream);
-}
-
-.screenshotImg {
-  flex: 1;
-  width: 100%;
-  min-height: 0;
-  object-fit: cover;
-  object-position: top;
-  display: block;
-  opacity: 0.88;
-  transition: opacity 0.3s ease;
-}
-
-.flipWrapper:hover .screenshotImg {
-  opacity: 0.35;
-}
-
-.frontOverlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 1.25rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.flipWrapper:hover .frontOverlay {
-  opacity: 1;
-}
-
-@media (hover: none) {
-  .screenshotImg {
-    opacity: 0.75;
-  }
-  .frontOverlay {
-    opacity: 1;
-  }
-}
-
-.frontHint {
-  font-family: 'Raleway', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cream);
-  background: rgba(30, 26, 20, 0.72);
-  padding: 0.35em 0.75em;
-}
-
-.hintTap { display: none; }
-
-@media (hover: none) {
-  .hintClick { display: none; }
-  .hintTap   { display: inline; }
-}
-
-.frontNoImage {
-  width: 100%;
-  height: 100%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 6rem 4rem 3rem;
+  position: relative;
 }
 
-/* ── Back face — details ── */
+/* ── Centered card ── */
 
-.cardBack {
-  transform: rotateY(180deg);
+.card {
+  width: 100%;
+  max-width: 1080px;
+  height: 100%;
+  max-height: 600px;
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  background: rgba(20, 18, 14, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  position: relative;
+}
+
+/* mid-century hard offset shadow */
+.accentOrange .card { box-shadow: 8px 8px 0 rgba(30, 26, 20, 0.75); border-top: 4px solid var(--orange); }
+.accentGreen  .card { box-shadow: 8px 8px 0 rgba(30, 26, 20, 0.75); border-top: 4px solid var(--green); }
+
+/* ── Left — text panel ── */
+
+.left {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+  border-right: 3px solid rgba(245, 239, 224, 0.06);
 }
 
-.cardOrange .cardBack { background: var(--orange); }
-.cardGreen  .cardBack { background: var(--green); }
+/* ── Counter ── */
 
-.backTitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
+.counter {
+  margin-bottom: 1rem;
+}
+
+.counterNum {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.accentOrange .counterNum { color: var(--orange); }
+.accentGreen  .counterNum { color: var(--green-light); }
+
+.counterTotal {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: rgba(245, 239, 224, 0.3);
+}
+
+/* ── Title ── */
+
+.title {
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+  font-weight: 900;
   color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 0.9rem;
 }
 
-.backDesc {
+/* ── Description ── */
+
+.desc {
   font-family: 'Karla', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(245, 239, 224, 0.88);
-  line-height: 1.6;
+  font-size: 0.84rem;
+  color: rgba(245, 239, 224, 0.72);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  max-width: 400px;
 }
 
-.backTech {
+/* ── Tech pills ── */
+
+.tech {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
 }
 
-.backPill {
+.pill {
   font-family: 'Raleway', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.2rem 0.65rem;
-  background: rgba(245, 239, 224, 0.18);
-  color: var(--cream);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  background: rgba(245, 239, 224, 0.07);
+  color: rgba(245, 239, 224, 0.6);
+  border: 1px solid rgba(245, 239, 224, 0.1);
   border-radius: 1px;
 }
 
-.backLinks {
+/* ── Links ── */
+
+.links {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
-  margin-top: 0.25rem;
 }
 
 .linkBtn {
@@ -247,53 +127,55 @@
   align-items: center;
   gap: 0.4rem;
   font-family: 'Raleway', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cream);
   padding: 0.45rem 1rem;
-  border: 1.5px solid rgba(245, 239, 224, 0.5);
+  border: 1.5px solid rgba(245, 239, 224, 0.3);
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .linkBtn:hover {
-  background: rgba(245, 239, 224, 0.15);
+  background: rgba(245, 239, 224, 0.1);
   border-color: var(--cream);
 }
 
 .linkBtnPrimary {
-  background: rgba(245, 239, 224, 0.18);
-  border-color: var(--cream);
+  border-color: transparent;
 }
 
-.linkBtnPrimary:hover {
-  background: rgba(245, 239, 224, 0.32);
-}
+.accentOrange .linkBtnPrimary { background: var(--orange); }
+.accentGreen  .linkBtnPrimary { background: var(--green); }
 
-/* ── Cooking footer ── */
+.accentOrange .linkBtnPrimary:hover { background: var(--orange-light); }
+.accentGreen  .linkBtnPrimary:hover { background: var(--green-light); }
 
-.cookingFooter {
+/* ── "Cooking" note on last section ── */
+
+.cooking {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.55rem;
   margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(245, 239, 224, 0.08);
+}
+
+.pot {
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
 }
 
 .cookingText {
   font-family: 'Raleway', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--sand);
-}
-
-.pot {
-  width: 64px;
-  height: 64px;
 }
 
 @keyframes steamRise1 {
@@ -316,34 +198,108 @@
 .steam2 { animation: steamRise2 1.8s ease-out infinite 0.6s; }
 .steam3 { animation: steamRise3 1.8s ease-out infinite 1.2s; }
 
+/* ── Right — monitor mockup ── */
+
+.right {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monitorWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1.75rem 2rem 1.5rem;
+}
+
+.monitorBezel {
+  width: 100%;
+  background: #1a1612;
+  border: 2px solid rgba(245, 239, 224, 0.1);
+  border-radius: 10px 10px 6px 6px;
+  padding: 10px 10px 16px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.monitorCam {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 239, 224, 0.18);
+  margin: 0 auto 8px;
+}
+
+.monitorScreen {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.monitorMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.monitorNeck {
+  width: 52px;
+  height: 18px;
+  background: #1a1612;
+  border-left: 2px solid rgba(245, 239, 224, 0.08);
+  border-right: 2px solid rgba(245, 239, 224, 0.08);
+}
+
+.monitorBase {
+  width: 130px;
+  height: 7px;
+  background: #1a1612;
+  border-radius: 0 0 6px 6px;
+  border: 2px solid rgba(245, 239, 224, 0.08);
+  border-top: none;
+}
+
+/* ── Mobile ── */
+
 @media (max-width: 768px) {
   .section {
-    min-width: 100%;
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     height: auto;
-    max-height: none;
+    min-height: 100svh;
     overflow: visible;
     scroll-snap-align: none;
-    padding-bottom: 4rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .section {
-    padding: 5rem 1.5rem;
+    padding: 5.5rem 1.25rem 2rem;
+    align-items: flex-start;
   }
 
-  .grid {
+  .card {
+    max-height: none;
     grid-template-columns: 1fr;
+    grid-template-rows: 220px auto;
   }
 
-  .flipWrapper {
-    height: 380px;
+  .right {
+    order: -1;
+  }
+
+  .left {
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-right: none;
+    border-top: 1px solid rgba(245, 239, 224, 0.06);
+  }
+
+  .desc {
+    max-width: 100%;
   }
 }

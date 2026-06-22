@@ -1,20 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 
-const SECTION_ORDER = ['home', 'about', 'projects', 'contact']
+const SECTION_ORDER = ['home', 'about', 'project-0', 'project-1', 'project-2', 'project-3', 'contact']
 
 const MESSAGES = {
-  home:     'Welcome back',
-  about:    'About me',
-  projects: 'My projects',
-  contact:  'Contact information',
+  home:        'Welcome back',
+  about:       'About me',
+  'project-0': 'Portfolio Website',
+  'project-1': 'Daily Task Categorizer',
+  'project-2': 'Community Group App',
+  'project-3': 'Coffee Logger',
+  contact:     'Contact information',
 }
 
 const UNDERLINE_COLOR = {
-  home:     '#D4521A',
-  about:    '#3D6B35',
-  projects: '#D4521A',
-  contact:  '#3D6B35',
+  home:        '#D4521A',
+  about:       '#3D6B35',
+  'project-0': '#D4521A',
+  'project-1': '#3D6B35',
+  'project-2': '#D4521A',
+  'project-3': '#3D6B35',
+  contact:     '#3D6B35',
 }
 
 const TransitionOverlay = () => {
