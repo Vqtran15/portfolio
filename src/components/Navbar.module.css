@@ -16,17 +16,6 @@
   box-shadow: 0 2px 20px rgba(30, 26, 20, 0.08);
 }
 
-.lightLinks .links a {
-  color: rgba(245, 239, 224, 0.8);
-}
-
-.lightLinks .links a:hover {
-  color: var(--cream);
-}
-
-.lightLinks .links a::after {
-  background: var(--cream);
-}
 
 .logo {
   font-family: 'Raleway', sans-serif;
@@ -73,9 +62,10 @@
   font-size: 0.82rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--dark);
+  color: var(--cream);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 14px rgba(0,0,0,0.45);
   position: relative;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .links a::after {
@@ -91,16 +81,14 @@
 
 .links a:hover,
 .links a.activeLink {
-  color: var(--orange);
+  color: var(--cream);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.85), 0 0 16px rgba(0,0,0,0.55);
 }
 
 .links a:hover::after {
   width: 100%;
 }
 
-.lightLinks .links a.activeLink {
-  color: var(--cream);
-}
 
 @media (max-width: 768px) {
   .nav {

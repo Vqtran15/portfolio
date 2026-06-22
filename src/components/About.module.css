@@ -6,7 +6,7 @@
   scroll-snap-align: start;
   height: 100vh;
   overflow: hidden;
-  background: var(--dark);
+  background: transparent;
   position: relative;
   display: flex;
   align-items: center;
@@ -36,9 +36,11 @@
   align-items: center;
   gap: 0.15rem;
   padding: 0.45rem 0.85rem;
-  background: rgba(245, 239, 224, 0.07);
-  border: 1.5px solid rgba(245, 239, 224, 0.14);
+  background: rgba(30, 26, 20, 0.68);
+  border: 1.5px solid rgba(245, 239, 224, 0.22);
   border-radius: 2px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   transform: translate(-50%, -50%);
   white-space: nowrap;
   transition: background 0.2s ease, border-color 0.2s ease;

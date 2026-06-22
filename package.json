@@ -9,9 +9,10 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "framer-motion": "^11.18.2",
     "gatsby": "^5.13.7",
+    "gsap": "^3.15.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "framer-motion": "^11.18.2"
+    "react-dom": "^18.3.1"
   }
 }

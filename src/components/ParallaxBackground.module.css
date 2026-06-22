@@ -1,0 +1,30 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--cream);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-18px); }
+}
+
+.floatSun {
+  animation: floatBob 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 0.08; }
+}
+
+.star {
+  animation: twinkle 3s ease-in-out infinite;
+}

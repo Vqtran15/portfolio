@@ -21,7 +21,9 @@ const allBadges = (() => {
   return result
 })()
 
-const RADIUS = 295
+const RADIUS_X = 430
+const RADIUS_Y_TOP = 295
+const RADIUS_Y_BOTTOM = 305
 const SPEED = 0.16 // radians per second
 
 const OrbitBadge = ({ skill, index, total }) => {
@@ -31,8 +33,14 @@ const OrbitBadge = ({ skill, index, total }) => {
 
   useAnimationFrame((time) => {
     const angle = startAngle + (time / 1000) * SPEED
-    x.set(Math.cos(angle) * RADIUS)
-    y.set(Math.sin(angle) * RADIUS)
+    const c = Math.cos(angle)
+    const s = Math.sin(angle)
+    // superellipse (n=4): bulges outward at 45° diagonals so bio card corners are cleared
+    // harmonic wobble adds gentle irregularity so it doesn't look like a perfect shape
+    const wobble = 1 + 0.07 * Math.sin(3 * angle)
+    const radiusY = s > 0 ? RADIUS_Y_BOTTOM : RADIUS_Y_TOP
+    x.set(Math.sign(c) * Math.pow(Math.abs(c), 0.5) * RADIUS_X * wobble)
+    y.set(Math.sign(s) * Math.pow(Math.abs(s), 0.5) * radiusY * wobble)
   })
 
   return (

@@ -2,7 +2,7 @@ export const projects = [
   {
     title: 'Portfolio Website',
     description: "A mid-century modern portfolio built with Gatsby and React — featuring hand-crafted animations, scroll-driven effects, and full click tracking via Google Tag Manager and GA4.",
-    tech: ['React', 'Gatsby', 'Google Tag Manager', 'Google Analytics'],
+    tech: ['React', 'Gatsby', 'GSAP', 'Google Tag Manager', 'Google Analytics'],
     github: 'https://github.com/Vqtran15/portfolio',
     screenshot: '/images/portfolio.png',
   },
@@ -37,6 +37,7 @@ export const projects = [
 export const techCategoryMap = {
   'React':               'Frontend',
   'Gatsby':              'Frontend',
+  'GSAP':               'Frontend',
   'Vite':                'Tools',
   'Google Tag Manager':  'Tools',
   'Google Analytics':    'Tools',

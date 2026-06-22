@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import CursorTrailer from './CursorTrailer'
 import SectionNav from './SectionNav'
 import TransitionOverlay from './TransitionOverlay'
+import ParallaxBackground from './ParallaxBackground'
 import * as styles from './Layout.module.css'
 
 const Layout = ({ children }) => {
@@ -20,6 +21,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className={styles.wrapper}>
+      <ParallaxBackground />
       <CursorTrailer />
       <TransitionOverlay />
       <SectionNav />
