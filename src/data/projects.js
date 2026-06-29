@@ -17,11 +17,11 @@ export const projects = [
     video: '/videos/to-do-demo.mp4',
   },
   {
-    title: 'Community Group App',
+    title: 'Covey Space',
     description: "Managing our community group meant juggling a separate group chat on GroupMe, multiple Google Sheets for meal and service sign-ups, losing prayer requests in the chat, and forgetting about that we have a birthday tab. This app brings it together — automated meal sign-ups, service night scheduling, group chat, prayer request logging, and birthday reminders all in one place. Scalable for multiple community groups to use with security features. My biggest project yet!",
     tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/community-group',
-    live: 'https://bridgetown-community-group.vercel.app',
+    live: 'https://www.coveyspace.com/',
     screenshot: '/images/community-group.png',
     video: '/videos/community-group-demo.mp4',
   },
