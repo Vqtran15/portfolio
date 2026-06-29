@@ -33,13 +33,13 @@ const EmailReveal = () => {
         ) : (
           <motion.a
             key="email"
-            href="mailto:vqtran15@gmail.com"
+            href="mailto:vuong.tran.dev@gmail.com"
             className={styles.emailLink}
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
           >
-            vqtran15@gmail.com
+            vuong.tran.dev@gmail.com
           </motion.a>
         )}
       </AnimatePresence>
