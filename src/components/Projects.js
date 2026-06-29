@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import * as styles from './Projects.module.css'
 import { projects } from '../data/projects'
 
@@ -15,12 +15,178 @@ const ExternalIcon = () => (
   </svg>
 )
 
+const MonitorIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="2" y="3" width="20" height="14" rx="2" />
+    <line x1="8" y1="21" x2="16" y2="21" />
+    <line x1="12" y1="17" x2="12" y2="21" />
+  </svg>
+)
+
+const PhoneIcon = () => (
+  <svg width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="5" y="2" width="14" height="20" rx="2" />
+    <line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="3" />
+  </svg>
+)
+
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.3 },
   transition: { duration: 0.5, delay, ease: 'easeOut' },
 })
+
+const INTERVAL = 2000
+
+const DeviceCarousel = ({ screenshots }) => {
+  const hasDesktop = (screenshots?.desktop ?? []).length > 0
+  const hasMobile  = (screenshots?.mobile  ?? []).length > 0
+  const showToggle = hasDesktop && hasMobile
+  const defaultDevice = hasDesktop ? 'desktop' : 'mobile'
+
+  const [device, setDevice] = useState(defaultDevice)
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const images = screenshots?.[device] ?? []
+
+  useEffect(() => { setIndex(0) }, [device])
+
+  useEffect(() => {
+    if (paused || images.length <= 1) return
+    const t = setInterval(() => setIndex(i => (i + 1) % images.length), INTERVAL)
+    return () => clearInterval(t)
+  }, [paused, images.length, device])
+
+  const prev = () => setIndex(i => (i - 1 + images.length) % images.length)
+  const next = () => setIndex(i => (i + 1) % images.length)
+
+  return (
+    <motion.div
+      className={styles.carousel}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      {/* Device toggle — only shown when both types have screenshots */}
+      {showToggle && <div className={styles.deviceToggle}>
+        <button
+          className={`${styles.deviceBtn} ${device === 'desktop' ? styles.deviceBtnActive : ''}`}
+          onClick={() => setDevice('desktop')}
+        >
+          <MonitorIcon /> Desktop
+        </button>
+        <button
+          className={`${styles.deviceBtn} ${device === 'mobile' ? styles.deviceBtnActive : ''}`}
+          onClick={() => setDevice('mobile')}
+        >
+          <PhoneIcon /> Mobile
+        </button>
+      </div>}
+
+      {/* Mockup + arrows */}
+      <div className={styles.mockupWrapper} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+        {images.length > 1 && (
+          <button className={`${styles.arrow} ${styles.arrowLeft}`} onClick={prev} aria-label="Previous screenshot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+        )}
+      <AnimatePresence mode="wait">
+        {device === 'desktop' ? (
+          <motion.div
+            key="desktop"
+            className={styles.monitorWrap}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className={styles.monitorBezel}>
+              <div className={styles.monitorCam} />
+              <div className={styles.monitorScreen}>
+                <AnimatePresence mode="wait">
+                  {images.length > 0 ? (
+                    <motion.img
+                      key={images[index]}
+                      src={images[index]}
+                      alt=""
+                      className={styles.monitorMedia}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                    />
+                  ) : (
+                    <div key="placeholder" className={styles.placeholder}>
+                      <span>Screenshots coming soon</span>
+                    </div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+            <div className={styles.monitorNeck} />
+            <div className={styles.monitorBase} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="mobile"
+            className={styles.phoneWrap}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className={styles.phone}>
+              <div className={styles.phonePill} />
+              <div className={styles.phoneScreen}>
+                <AnimatePresence mode="wait">
+                  {images.length > 0 ? (
+                    <motion.img
+                      key={images[index]}
+                      src={images[index]}
+                      alt=""
+                      className={styles.phoneMedia}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                    />
+                  ) : (
+                    <div key="placeholder" className={styles.placeholder}>
+                      <span>Screenshots coming soon</span>
+                    </div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+        {images.length > 1 && (
+          <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={next} aria-label="Next screenshot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
+        )}
+      </div>
+
+      {/* Dot indicators */}
+      {images.length > 1 && (
+        <div className={styles.dots}>
+          {images.map((_, i) => (
+            <button
+              key={i}
+              className={`${styles.dot} ${i === index ? styles.dotActive : ''}`}
+              onClick={() => setIndex(i)}
+              aria-label={`Screenshot ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </motion.div>
+  )
+}
 
 const ProjectSection = ({ project, index }) => {
   const isOrange = index % 2 === 0
@@ -78,40 +244,9 @@ const ProjectSection = ({ project, index }) => {
         </motion.div>
       </div>
 
-      {/* Right — monitor mockup */}
+      {/* Right — device carousel */}
       <div className={styles.right}>
-        <motion.div
-          className={styles.monitorWrap}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <div className={styles.monitorBezel}>
-            <div className={styles.monitorCam} />
-            <div className={styles.monitorScreen}>
-              {project.video ? (
-                <video
-                  className={styles.monitorMedia}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                >
-                  <source src={project.video} type="video/mp4" />
-                </video>
-              ) : project.screenshot ? (
-                <img
-                  src={project.screenshot}
-                  alt={`${project.title} screenshot`}
-                  className={styles.monitorMedia}
-                />
-              ) : null}
-            </div>
-          </div>
-          <div className={styles.monitorNeck} />
-          <div className={styles.monitorBase} />
-        </motion.div>
+        <DeviceCarousel screenshots={project.screenshots} />
       </div>
 
     </div>
@@ -130,7 +265,7 @@ const BeanIcon = () => (
 )
 
 const CatchTheBeanGame = () => {
-  const [phase, setPhase] = useState('idle')   // idle | playing | done
+  const [phase, setPhase] = useState('idle')
   const [score, setScore] = useState(0)
   const [best, setBest] = useState(0)
   const [timeLeft, setTimeLeft] = useState(30)
@@ -139,7 +274,6 @@ const CatchTheBeanGame = () => {
 
   useEffect(() => { scoreRef.current = score }, [score])
 
-  // Countdown
   useEffect(() => {
     if (phase !== 'playing') return
     if (timeLeft <= 0) {
@@ -152,7 +286,6 @@ const CatchTheBeanGame = () => {
     return () => clearTimeout(t)
   }, [phase, timeLeft])
 
-  // Spawn beans
   useEffect(() => {
     if (phase !== 'playing') return
     const spawn = () => {
@@ -167,7 +300,6 @@ const CatchTheBeanGame = () => {
   }, [phase])
 
   const catchBean = (id) => {
-    // flip to mug icon briefly, then remove
     setBeans(b => b.map(bean => bean.id === id ? { ...bean, caught: true } : bean))
     setScore(s => s + 1)
     setTimeout(() => setBeans(b => b.filter(bean => bean.id !== id)), 320)
@@ -190,7 +322,6 @@ const CatchTheBeanGame = () => {
             <button className={styles.gameBtn} onClick={start}>Start</button>
           </div>
         )}
-
         {phase === 'done' && (
           <div className={styles.gameScreen}>
             <p className={styles.gameResult}>
@@ -200,7 +331,6 @@ const CatchTheBeanGame = () => {
             <button className={styles.gameBtn} onClick={start}>Play Again</button>
           </div>
         )}
-
         {phase === 'playing' && (
           <>
             <div className={styles.gameHUD}>
@@ -235,24 +365,16 @@ const ComingSoonSection = () => (
         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
       >
         <svg viewBox="0 0 80 90" fill="none" overflow="visible" aria-hidden="true">
-          {/* Steam */}
           <ellipse className={styles.steam1} cx="26" cy="18" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
           <ellipse className={styles.steam2} cx="40" cy="14" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
           <ellipse className={styles.steam3} cx="54" cy="18" rx="3" ry="6" fill="#C9A040" opacity="0.85" />
-          {/* Cup rim */}
           <rect x="9" y="27" width="54" height="5" rx="2.5" fill="#E8D5B5" />
-          {/* Coffee surface */}
           <ellipse cx="36" cy="29" rx="25" ry="5" fill="#2C1A0A" />
-          {/* Coffee sheen */}
           <ellipse cx="30" cy="27" rx="8" ry="2.5" fill="#4A2E1A" opacity="0.6" />
-          {/* Cup body */}
           <path d="M11 32 L13 70 Q13 75 18 75 L54 75 Q59 75 59 70 L61 32 Z" fill="#D4B896" />
-          {/* Cup body shadow */}
           <path d="M52 32 L54 70 Q54 75 54 75 L54 75 Q59 75 59 70 L61 32 Z" fill="#C0A07A" />
-          {/* Handle */}
           <path d="M61 41 Q75 41 75 53 Q75 65 61 63" stroke="#D4B896" strokeWidth="9" strokeLinecap="round" fill="none" />
           <path d="M61 41 Q72 41 72 53 Q72 63 61 61" stroke="#C0A07A" strokeWidth="4" strokeLinecap="round" fill="none" />
-          {/* Saucer */}
           <ellipse cx="36" cy="79" rx="36" ry="5.5" fill="#B89060" />
           <ellipse cx="36" cy="77" rx="36" ry="5.5" fill="#D4B896" />
         </svg>

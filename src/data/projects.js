@@ -4,8 +4,14 @@ export const projects = [
     description: "A mid-century modern portfolio built with Gatsby and React that features fun animations, scroll-driven effects, and full click tracking via Google Tag Manager and GA4. Thank you for visiting this project!",
     tech: ['React', 'Gatsby', 'HTML', 'CSS', 'GSAP', 'Google Tag Manager', 'Google Analytics'],
     github: 'https://github.com/Vqtran15/portfolio',
-    screenshot: '/images/portfolio.png',
-    video: '/videos/Portfolio_Demo.mp4',
+    screenshots: {
+      desktop: [],
+      mobile: [
+        '/images/portfolio/portfolio-mobile.PNG',
+        '/images/portfolio/portfolio-mobile2.PNG',
+        '/images/portfolio/portfolio-mobile3.PNG',
+      ],
+    },
   },
   {
     title: 'Daily Task Categorizer',
@@ -13,8 +19,19 @@ export const projects = [
     tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/todo-list',
     live: 'https://todo-list-vuong-tran.vercel.app',
-    screenshot: '/images/to-do-list.png',
-    video: '/videos/to-do-demo.mp4',
+    screenshots: {
+      desktop: [
+        '/images/todo/to-do-desktop.png',
+        '/images/todo/to-do-desktop2.png',
+      ],
+      mobile: [
+        '/images/todo/todo-mobile1.PNG',
+        '/images/todo/todo-mobile2.PNG',
+        '/images/todo/todo-mobile3.PNG',
+        '/images/todo/todo-mobile4.PNG',
+        '/images/todo/todo-mobile5.PNG',
+      ],
+    },
   },
   {
     title: 'Covey Space',
@@ -22,8 +39,23 @@ export const projects = [
     tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/community-group',
     live: 'https://www.coveyspace.com/',
-    screenshot: '/images/community-group.png',
-    video: '/videos/community-group-demo.mp4',
+    screenshots: {
+      desktop: [
+        '/images/covey/covey-desktop1.png',
+        '/images/covey/covey-desktop2.png',
+        '/images/covey/covey-desktop3.png',
+        '/images/covey/covey-desktop4.png',
+        '/images/covey/covey-desktop5.png',
+        '/images/covey/covey-desktop6.png',
+      ],
+      mobile: [
+        '/images/covey/covey-mobile1.PNG',
+        '/images/covey/covey-mobile2.PNG',
+        '/images/covey/covey-mobile3.PNG',
+        '/images/covey/covey-mobile4.PNG',
+        '/images/covey/covey-mobile5.PNG',
+      ],
+    },
   },
   {
     title: 'Coffee Logger',
@@ -31,8 +63,15 @@ export const projects = [
     tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
     github: 'https://github.com/Vqtran15/coffee-log',
     live: 'https://coffee-log-pro.vercel.app/',
-    screenshot: '/images/coffee-log.png',
-    video: '/videos/coffee-log.mp4',
+    screenshots: {
+      desktop: [
+      ],
+      mobile: [
+        '/images/coffee/coffee-mobile1.PNG',
+        '/images/coffee/coffee-mobile2.PNG',
+        '/images/coffee/coffee-mobile3.PNG',
+      ],
+    },
   },
 ]
 
