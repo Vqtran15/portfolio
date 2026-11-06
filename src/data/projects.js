@@ -1,5 +1,29 @@
 export const projects = [
   {
+    title: 'Coveyspace',
+    description: "Managing our community group meant juggling a separate group chat on GroupMe, multiple Google Sheets for meal and service sign-ups, losing prayer requests in the chat, and forgetting about that we have a birthday tab. This app brings it together — automated meal sign-ups, service night scheduling, group chat, prayer request logging, and birthday reminders all in one place. Scalable for multiple community groups to use with security features. My biggest project yet!",
+    tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
+    github: 'https://github.com/Vqtran15/community-group',
+    live: 'https://www.coveyspace.com/',
+    screenshots: {
+      desktop: [
+        '/images/covey/covey-desktop1.png',
+        '/images/covey/covey-desktop2.png',
+        '/images/covey/covey-desktop3.png',
+        '/images/covey/covey-desktop4.png',
+        '/images/covey/covey-desktop5.png',
+        '/images/covey/covey-desktop6.png',
+      ],
+      mobile: [
+        '/images/covey/covey-mobile1.PNG',
+        '/images/covey/covey-mobile2.PNG',
+        '/images/covey/covey-mobile3.PNG',
+        '/images/covey/covey-mobile4.PNG',
+        '/images/covey/covey-mobile5.PNG',
+      ],
+    },
+  },
+  {
     title: 'Portfolio Website',
     description: "A mid-century modern portfolio built with Gatsby and React that features fun animations, scroll-driven effects, and full click tracking via Google Tag Manager and GA4. Thank you for visiting this project!",
     tech: ['React', 'Gatsby', 'HTML', 'CSS', 'GSAP', 'Google Tag Manager', 'Google Analytics'],
@@ -30,30 +54,6 @@ export const projects = [
         '/images/todo/todo-mobile3.PNG',
         '/images/todo/todo-mobile4.PNG',
         '/images/todo/todo-mobile5.PNG',
-      ],
-    },
-  },
-  {
-    title: 'Covey Space',
-    description: "Managing our community group meant juggling a separate group chat on GroupMe, multiple Google Sheets for meal and service sign-ups, losing prayer requests in the chat, and forgetting about that we have a birthday tab. This app brings it together — automated meal sign-ups, service night scheduling, group chat, prayer request logging, and birthday reminders all in one place. Scalable for multiple community groups to use with security features. My biggest project yet!",
-    tech: ['React', 'Vite', 'HTML', 'CSS', 'Tailwind CSS', 'Supabase PostgreSQL', 'Vercel'],
-    github: 'https://github.com/Vqtran15/community-group',
-    live: 'https://www.coveyspace.com/',
-    screenshots: {
-      desktop: [
-        '/images/covey/covey-desktop1.png',
-        '/images/covey/covey-desktop2.png',
-        '/images/covey/covey-desktop3.png',
-        '/images/covey/covey-desktop4.png',
-        '/images/covey/covey-desktop5.png',
-        '/images/covey/covey-desktop6.png',
-      ],
-      mobile: [
-        '/images/covey/covey-mobile1.PNG',
-        '/images/covey/covey-mobile2.PNG',
-        '/images/covey/covey-mobile3.PNG',
-        '/images/covey/covey-mobile4.PNG',
-        '/images/covey/covey-mobile5.PNG',
       ],
     },
   },

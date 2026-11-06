@@ -32,9 +32,6 @@
   position: relative;
 }
 
-/* mid-century hard offset shadow */
-.accentOrange .card { box-shadow: 8px 8px 0 rgba(30, 26, 20, 0.75); border-top: 4px solid var(--orange); }
-.accentGreen  .card { box-shadow: 8px 8px 0 rgba(30, 26, 20, 0.75); border-top: 4px solid var(--green); }
 
 /* ── Left — text panel ── */
 
