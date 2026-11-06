@@ -12,7 +12,7 @@ const NotFoundPage = () => (
     background: 'var(--cream)',
     gap: '1rem',
   }}>
-    <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '8rem', color: 'var(--orange)', fontWeight: 900, lineHeight: 1 }}>
+    <h1 style={{ fontFamily: 'Jost, sans-serif', fontSize: '8rem', color: 'var(--orange)', fontWeight: 900, lineHeight: 1 }}>
       404
     </h1>
     <p style={{ fontFamily: 'Karla, sans-serif', fontSize: '1.25rem', color: 'var(--dark)' }}>

@@ -133,7 +133,7 @@ const TransitionOverlay = () => {
                   style={{
                     display: 'inline-block',
                     position: 'relative',
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Jost', sans-serif",
                     fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
                     fontWeight: 700,
                     color: '#F5EFE0',
