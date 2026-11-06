@@ -684,20 +684,33 @@
     width: 100%;
     max-height: none;
     height: auto;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.25rem;
   }
 
-  /* carousel panel on top, text below */
+  /* unwrap the desktop left/right panels so their children can be
+     reordered together as a single flex column (screenshot player
+     between the description and the tech pills) */
+  .left,
   .right {
-    order: -1;
-    min-height: 280px;
-    overflow: hidden;
+    display: contents;
   }
+
+  .counter { order: 1; }
+  .title   { order: 2; }
+  .desc    { order: 3; }
+  .carousel { order: 4; }
+  .tech    { order: 5; }
+  .links   { order: 6; }
 
   .carousel {
+    width: auto;
+    height: auto;
+    min-height: 280px;
+    overflow: hidden;
     padding: 0.75rem 1rem 0.5rem;
-    height: 100%;
+    margin: 0 -1.25rem 1.25rem;
   }
 
   .monitorNeck,
@@ -708,12 +721,6 @@
   .phone {
     width: 120px;
     height: 230px;
-  }
-
-  .left {
-    padding: 1.5rem 1.25rem;
-    border-right: none;
-    border-top: 1px solid rgba(245, 239, 224, 0.08);
   }
 
   .desc {
